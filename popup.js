@@ -339,6 +339,98 @@ function open_in_new_incognito() {
 	chrome.windows.create({'url': uri, 'incognito': true});
 }
 
+//////////////////////////////////////////////////////////////////////
+// Keyboard-related functions.
+//
+// Why not just use HTML's accesskeys? Because it gives me very little control,
+// it is too limited, and provides a poor UX.
+
+// Map from single characters to HTML elements.
+// For instance, an element <input type="text" … data-Keyboard="4 x"> will be
+// referenced from keys "4", "x" and "X".
+var g_keyboard_shortcut_map = {};
+
+// Initialization.
+function prepare_keyboard_shortcuts(hide_tooltips) {
+	var is_mac = /\bMac OS X\b/.test(window.navigator.appVersion);
+	for (let elem of document.querySelectorAll('[data-keyboard]')) {
+		let keys = elem.dataset.keyboard.trim().split(/\s+/);
+		for (let key of keys) {
+			if (key.length == 1) {
+				g_keyboard_shortcut_map[key.toLowerCase()] = elem;
+				g_keyboard_shortcut_map[key.toUpperCase()] = elem;
+			}
+		}
+		let entermodifier = elem.dataset.entermodifier;
+		if (entermodifier) {
+			if (is_mac) {
+				// Note: that character is ⌃ 8963, U+2303 UP ARROWHEAD
+				// It looks similar, but it is NOT ^ 94, U+005E CIRCUMFLEX ACCENT
+				entermodifier = entermodifier.replace(/⌃/g, '⌘');
+				elem.dataset.entermodifier = entermodifier;
+			}
+			keys.push(entermodifier);
+		}
+		if (hide_tooltips) {
+			elem.title = '';
+		} else {
+			elem.title += '\nShortcut' + (keys.length == 1 ? '' : 's') + ': ' + keys.join(', ');
+		}
+		// Idea: Show keyboard shorcuts when ctrl/alt/meta is pressed, and hide
+		// them when not needed anymore.
+		// Issue: It requires a lot of effort to do it properly (CSS
+		// positioning, JavaSript), and provides very little gain over the
+		// standard tooltip provided by title attribute.
+	}
+}
+
+function keydown_handler(ev) {
+	if (ev.repeat || ev.isComposing) {
+		return;
+	}
+
+	const only_shift = 1;
+	const only_ctrl  = 2;
+	const only_alt   = 4;
+	const only_meta  = 8;
+	let modifiers = (  // Each bit is one modifier.
+		(ev.shiftKey ? only_shift : 0) |
+		(ev.ctrlKey  ? only_ctrl  : 0) |
+		(ev.altKey   ? only_alt   : 0) |
+		(ev.metaKey  ? only_meta  : 0)
+	);
+	let is_mac = /\bMac OS X\b/.test(window.navigator.appVersion);
+	let platform_control = is_mac ? only_meta : only_ctrl;
+
+	if (ev.key == 'Enter') {
+		if (modifiers === only_alt) {
+			// "Enter" does a submit, and opens in the current tab.
+			// "Alt+Enter" is an alternative for when "Enter" would enter a newline instead.
+			open_in_current_tab();
+		} else if (modifiers === platform_control) {
+			// "Ctrl+click" opens a link in a background tab.
+			open_in_new_background_tab();
+		} else if (modifiers === only_shift) {
+			// "Shift+click" opens a link in a new window.
+			open_in_new_window();
+		} else if (modifiers === (only_shift | platform_control)) {
+			// "Ctrl+Shift+click" opens a link in a new tab.
+			open_in_new_tab();
+		}
+	} else if (modifiers === only_alt || modifiers === platform_control) {
+		let elem = g_keyboard_shortcut_map[ev.key];
+		if (elem) {
+			elem.focus();
+			if (elem.tagName.toLowerCase() == 'button' || elem.type == 'button' || elem.type == 'submit') {
+				elem.click();
+			} else {
+				elem.select();
+			}
+			ev.preventDefault();
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // Initialization.
@@ -405,6 +497,8 @@ function init() {
 
 			let password = document.getElementById('password');
 			password.type = items.hide_passwords ? 'password' : 'text';
+
+			prepare_keyboard_shortcuts(items.hide_tooltips);
 		}),
 
 		// Loading quick options.
@@ -448,6 +542,9 @@ function init() {
 	// Auto-size.
 	document.getElementById('search').addEventListener('input', auto_size_textarea);
 	document.getElementById('hash').addEventListener('input', auto_size_textarea);
+
+	// Keyboard shortcuts.
+	window.addEventListener('keydown', keydown_handler);
 }
 
 // This script is being included with the "defer" attribute, which means it

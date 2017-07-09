@@ -102,9 +102,4 @@ init();
 
 // TODO:
 // * "About" link, source-code, README, donation…
-// * Keyboard shortcuts (accesskey is not good enough)
-//   Chrome behavior:
-//   Ctrl+Shift+click = new tab
-//   Ctrl      +click = new bg tab
-//        Shift+click = new window
 // * Publish to Chrome Web Store!

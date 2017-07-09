@@ -204,39 +204,39 @@ input#hash_sep {
 
 <div class="group">
 	<div class="row">
-		<input type="url" id="uri" placeholder="http://example.com/" accesskey="l">
+		<input type="url" id="uri" placeholder="http://example.com/" title="Full URI" data-keyboard="1 L">
 	</div>
 </div>
 
 <div class="group">
 	<div class="row">
-		<input type="text" id="protocol" list="protocols" placeholder="protocol" pattern="[-a-zA-Z0-9+.]+" accesskey="">
-		<input type="text" id="username" placeholder="username" accesskey="u">
-		<input type="text" id="password" placeholder="password" accesskey="">
+		<input type="text" id="protocol" list="protocols" pattern="[-a-zA-Z0-9+.]+" placeholder="protocol" title="Protocol" data-keyboard="2">
+		<input type="text" id="username" placeholder="username" title="Username" data-keyboard="3 U">
+		<input type="text" id="password" placeholder="password" title="Password" data-keyboard="4">
 	</div>
 	<div class="row">
-		<input type="text" id="hostname" list="hostnames" placeholder="hostname" accesskey="d" pattern="[^\s!&quot;#$%&'()*+,/:;&lt;=&gt;?@\\^_`{|}~[\]]+|\[[0-9a-fA-F:]+\]">
-		<input type="number" id="port" min="0" max="65535" step="1" list="ports" placeholder="port" accesskey="">
+		<input type="text" id="hostname" list="hostnames" pattern="[^\s!&quot;#$%&'()*+,/:;&lt;=&gt;?@\\^_`{|}~[\]]+|\[[0-9a-fA-F:]+\]" placeholder="hostname" title="Hostname (domain name)" data-keyboard="5 D">
+		<input type="number" id="port" list="ports" min="0" max="65535" step="1" placeholder="port" title="TCP port" data-keyboard="6">
 	</div>
 	<div class="row">
-		<input type="text" id="pathname" list="pathnames" placeholder="pathname" accesskey="p">
+		<input type="text" id="pathname" list="pathnames" placeholder="pathname" title="Pathname" data-keyboard="7 P">
 	</div>
 	<div class="row">
-		<textarea id="search" placeholder="?search" rows="1" accesskey="s"></textarea>
+		<textarea id="search" placeholder="?search" rows="1" title="Search string (query)" data-keyboard="8 Q S"></textarea>
 	</div>
 	<div class="row">
-		<textarea id="hash" placeholder="#hash" rows="1" accesskey="h"></textarea>
+		<textarea id="hash"   placeholder="#hash"   rows="1" title="Hash (fragment)"       data-keyboard="9 F H"></textarea>
 	</div>
 </div>
 
 <div class="group">
 	<div class="row buttons">
-		<input type="button" id="options" value="⚙" title="Options" accesskey="o">
-		<input type="submit" id="open" value="this tab" title="" accesskey="">
-		<input type="button" id="tab" value="new tab" title="" accesskey="t">
-		<input type="button" id="background" value="background" title="" accesskey="b">
-		<input type="button" id="window" value="window" title="" accesskey="w">
-		<input type="button" id="incognito" value="incognito" title="" accesskey="i">
+		<input type="button" id="options"    value="⚙"          title="Options"                        data-keyboard="O">
+		<input type="submit" id="open"       value="Go!"        title="Open in the current tab"        data-keyboard="G" data-entermodifier="⌥⏎">
+		<input type="button" id="tab"        value="new tab"    title="Open in a new tab"              data-keyboard="T" data-entermodifier="⇧⌃⏎">
+		<input type="button" id="background" value="background" title="Open in a background tab"       data-keyboard="B" data-entermodifier="⌃⏎">
+		<input type="button" id="window"     value="window"     title="Open in a new window"           data-keyboard="W" data-entermodifier="⇧⏎">
+		<input type="button" id="incognito"  value="incognito"  title="Open in a new incognito window" data-keyboard="I">
 	</div>
 </div>
 
@@ -288,14 +288,10 @@ input#hash_sep {
 	</fieldset>
 </div>
 
-<datalist id="protocols">
-</datalist>
-<datalist id="ports">
-</datalist>
-<datalist id="hostnames">
-</datalist>
-<datalist id="pathnames">
-</datalist>
+<datalist id="protocols"></datalist>
+<datalist id="ports"    ></datalist>
+<datalist id="hostnames"></datalist>
+<datalist id="pathnames"></datalist>
 
 </form>
 </body>

@@ -12,6 +12,7 @@ const g_datalist_names = [
 
 const g_other_options_names = [
 	'hide_passwords',
+	'hide_tooltips',
 	'window_width',
 	'input_font',
 	'textarea_font',
@@ -36,6 +37,7 @@ const g_default_options = {
 	'pathnames': [],
 	// Other options:
 	'hide_passwords': false,
+	'hide_tooltips': false,
 	'window_width': 500,
 	'input_font': '1em/1.66 sans-serif',
 	'textarea_font': '1em/1.66 monospace',
