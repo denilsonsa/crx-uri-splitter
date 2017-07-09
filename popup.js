@@ -1,0 +1,455 @@
+'use strict';
+
+//////////////////////////////////////////////////////////////////////
+// Misc. convenience functions.
+
+// Gets the current Chrome tab, returning a promise.
+function current_tab() {
+	return new Promise(function(resolve, reject) {
+		chrome.tabs.query({
+			'active': true,
+			'currentWindow': true,
+		}, function(tabs) {
+			if (tabs && tabs[0]) {
+				resolve(tabs[0]);
+			} else {
+				reject(new Error('No tab found.'));
+			}
+		});
+	});
+}
+
+// %-encode the matched character.
+function percent_encode(match) {
+	var replacement = '%' + match.codePointAt(0).toString(16);
+	if (replacement.length != 3) {
+		throw new Error('Characters outside 0x10..0xFF range are not supported in this function.');
+	}
+	return replacement;
+}
+
+// Splits the string s at the first occurrence of sep.
+// Always returns an Array of 3 items.
+// This function is inpired by the Python's method of the same name.
+function partition(sep, s) {
+	var index = s.indexOf(sep);
+	if (index == -1) {
+		return [s, '', ''];
+	} else {
+		return [
+			s.substring(0, index),
+			sep,
+			s.substring(index + sep.length)
+		];
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// Main functions.
+
+function multiline_split(value) {
+	if (!value) return '';
+
+	var kind;
+	if (value[0] == '?') {
+		kind = 'search';
+	} else if (value[0] == '#') {
+		kind = 'hash';
+	} else {
+		throw new Error('Unrecognized kind. Expected parameter with leading "?" or "#", found "' + value[0] + '"');
+	}
+
+	// Removing the leading ? or #.
+	value = value.substring(1);
+
+	// Separator.
+	var sep_chars = input_value(kind + '_sep');
+	// Escaping the special characters.
+	var sep_regex_str = '[' + sep_chars.replace(/[-\\^\]]/g, '\\$&') + ']';
+	var sep_regex = new RegExp(sep_regex_str, 'g');
+
+	var lines = value.split(sep_regex);
+
+	// Decoding "+" as space.
+	if (input_value(kind + '_plus')) {
+		lines = lines.map(
+			line => line.replace(/\+/g, ' ')
+		);
+	}
+
+	// Decoding %xx sequences.
+	if (input_value(kind + '_encode')) {
+		lines = lines.map(function(line) {
+			try {
+				return decodeURIComponent(line);
+			} catch (ex) {
+				// Malformed URI. Just ignore (and log) the error.
+				console.info(ex);
+				return line;
+			}
+		});
+	}
+
+	// Stripping whitespace and empty lines.
+	if (input_value(kind + '_trim')) {
+		lines = lines.map(
+			line => line.trim()
+		).filter(
+			line => line.length > 0
+		);
+	}
+
+	// Sorting.
+	if (input_value(kind + '_sort')) {
+		lines.sort();
+	}
+
+	return lines.join('\n');
+}
+
+function multiline_join(kind, value) {
+	if (!/^(search|hash)$/.test(kind)) {
+		throw new Error('Unrecognized kind: ' + kind);
+	}
+
+	var lines = value.replace(/\r\n/g, '\n').split('\n');
+
+	// Stripping whitespace and empty lines.
+	if (input_value(kind + '_trim')) {
+		lines = lines.map(
+			line => line.trim()
+		).filter(
+			line => line.length > 0
+		);
+	}
+
+	// Encoding %xx sequences.
+	if (input_value(kind + '_encode')) {
+		lines = lines.map(function(line) {
+			var pieces = partition('=', line);
+			pieces[0] = encodeURIComponent(pieces[0]);
+			pieces[2] = encodeURIComponent(pieces[2]);
+			return pieces.join('');
+
+		});
+	}
+
+	// Encoding space as "+".
+	if (input_value(kind + '_plus')) {
+		if (input_value(kind + '_encode')) {
+			lines = lines.map(
+				line => line.replace(/%20/g, '+')
+			);
+		} else {
+			lines = lines.map(
+				line => line.replace(/ /g, '+')
+			);
+		}
+	}
+
+	var sep_chars = input_value(kind + '_sep');
+
+	// Use the first char, or use an empty string.
+	var separator = sep_chars.substring(0, 1);
+
+	return lines.join(separator);
+}
+
+function full_uri_to_fields() {
+	var uri_elem = document.getElementById('uri');
+	var uri = uri_elem.value;
+	var url;
+	try {
+		url = new URL(uri);
+	} catch (ex) {
+		uri_elem.setCustomValidity(ex.message);
+		return;
+	}
+	uri_elem.setCustomValidity('');
+
+	document.getElementById('protocol').value = url.protocol.replace(/:$/, '');
+	// document.getElementById('hostname').value = decodeURIComponent(url.hostname);
+	document.getElementById('hostname').value = punycode.toUnicode(url.hostname);
+	document.getElementById('port').value = url.port;
+	document.getElementById('username').value = decodeURIComponent(url.username);
+	document.getElementById('password').value = decodeURIComponent(url.password);
+	document.getElementById('pathname').value = decodeURIComponent(url.pathname);
+	document.getElementById('search').value = multiline_split(url.search);
+	document.getElementById('hash').value = multiline_split(url.hash);
+
+	auto_size_textarea(document.getElementById('search'));
+	auto_size_textarea(document.getElementById('hash'));
+}
+
+function fields_to_full_uri() {
+	// Names of the pieces.
+	var names = [
+		'protocol',
+		'hostname',
+		'port',
+		'username',
+		'password',
+		'pathname',
+		'search',
+		'hash',
+	];
+
+	// Loading field values from DOM.
+	var s = {};
+	for (let name of names) {
+		let elem = document.getElementById(name);
+		if (!elem.checkValidity()) {
+			// Invalid input. Abort.
+			return;
+		}
+		if (elem.tagName.toLowerCase() == 'textarea') {
+			s[name] = multiline_join(name, elem.value);
+		} else if (elem.type == 'number') {
+			s[name] = elem.valueAsNumber;
+		} else {
+			s[name] = elem.value.trim();
+		}
+	}
+
+	if (s.protocol) {
+		s.protocol = s.protocol.toLowerCase();
+	} else {
+		// Default protocol if empty.
+		// I need one in order to generate a valid URL.
+		s.protocol = 'http';
+	}
+
+	// https://url.spec.whatwg.org/#special-scheme
+	// Also chrome:// and chrome-extension://
+	var protocol_is_special = /^(ftp|file|gopher|http|https|ws|wss|chrome|chrome-extension)$/.test(s.protocol);
+
+	// var encoded_hostname = encodeURIComponent(s.hostname);
+	var encoded_hostname = punycode.toASCII(s.hostname);
+
+	// All this string concatenation emulates the "new URL()" behavior.
+	//
+	// But why not use "new URL()" directly? Because that one only works for
+	// known protocols, because it can throw exceptions, and because before
+	// using it I'd have to concatenate all pieces anyway (the constructor
+	// requires a valid URL). Overall, I don't see any real advantage on using
+	// it.
+	var concatenation = (
+		s.protocol +
+		(protocol_is_special
+			? '://'
+			: ':'
+		) +
+		(s.username || s.password
+			? encodeURIComponent(s.username) +
+				(s.password
+					? ':' + encodeURIComponent(s.password)
+					: ''
+				) +
+				'@'
+			: ''
+		) +
+		encoded_hostname +
+		(isNaN(s.port)
+			? ''
+			: ':' + s.port
+		)
+	);
+	if (s.pathname) {
+		concatenation += (
+			(protocol_is_special && s.pathname[0] != '/'
+				? '/'
+				: ''
+			) +
+			s.pathname.replace(/[%#\? ]/g, percent_encode)
+		);
+	}
+	if (s.search) {
+		concatenation += '?' + s.search;
+		//concatenation += '?' + s.search.replace(/[%# ]/g, percent_encode);
+	}
+	if (s.hash) {
+		concatenation += '#' + s.hash;
+		//concatenation += '#' + s.hash.replace(/[ ]/g, percent_encode);
+	}
+
+	// var url;
+	// try {
+	// 	url = new URL(concatenation);
+	// } catch (ex) {
+	// 	console.log(ex);
+	// }
+	//
+	// if (s.protocol) url.protocol = s.protocol;
+	// url.hostname = s.hostname;
+	// if (!isNaN(s.port)) url.port = s.port;
+	// url.username = s.username;
+	// url.password = s.password;
+	// url.pathname = s.pathname;
+	// url.search = s.search;
+	// url.hash = s.hash;
+	//
+	// document.getElementById('uri').value = url.href;
+
+	var uri_elem = document.getElementById('uri');
+	uri_elem.value = concatenation;
+	uri_elem.setCustomValidity('');
+}
+
+//////////////////////////////////////////////////////////////////////
+// UI-related functions.
+
+// Simple error handler that logs the error and shows an alert box.
+function alert_error_reporter(err) {
+	console.error(err);
+	alert(err.message);
+}
+
+// Saves the current quick option.
+function quick_option_save(ev) {
+	var elem = ev.target;
+	var name = elem.id;
+	var data = {};
+	data[name] = input_value(elem);
+	save_options('sync', data).then(function() {
+		// Do nothing.
+	}, alert_error_reporter);
+}
+
+// Open the current URI...
+function open_in_current_tab() {
+	var uri = document.getElementById('uri').value;
+	current_tab().then(function(tab) {
+		chrome.tabs.update(tab.id, {'url': uri});
+	}, alert_error_reporter);
+}
+function open_in_new_tab() {
+	var uri = document.getElementById('uri').value;
+	chrome.tabs.create({'url': uri, 'active': true});
+}
+function open_in_new_background_tab() {
+	var uri = document.getElementById('uri').value;
+	chrome.tabs.create({'url': uri, 'active': false});
+}
+function open_in_new_window() {
+	var uri = document.getElementById('uri').value;
+	chrome.windows.create({'url': uri});
+}
+function open_in_new_incognito() {
+	var uri = document.getElementById('uri').value;
+	chrome.windows.create({'url': uri, 'incognito': true});
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// Initialization.
+
+function init() {
+	// Quick options: listing them and adding event listeners.
+	let quick_option_names = [];
+	for (let input of document.querySelectorAll('#options_panel input')) {
+		if (input.type != 'text' && input.type != 'checkbox') continue;
+		quick_option_names.push(input.id);
+		let event_name = 'input';
+		if (/^(checkbox|radio)$/i.test(input.type)) {
+			event_name = 'click';
+			input.addEventListener(event_name, full_uri_to_fields);
+			// full_uri_to_fields() not needed for "input" event, because
+			// that's already handled by <form>'s "input" event handler.
+		}
+		input.addEventListener(event_name, debounce(1000, quick_option_save));
+	}
+
+	// Running several promises (almost in parallel) and running some code only
+	// after all of them have resolved.
+	Promise.all([
+		// Getting the current URL.
+		current_tab().then(function(tab) {
+			let elem = document.getElementById('uri');
+			elem.value = tab.url;
+			elem.focus();
+			elem.select();
+		}),
+
+		// Loading datalist options.
+		load_options('sync', g_datalist_names).then(function(items) {
+			for (let name of g_datalist_names) {
+				let loaded_data = items[name];
+				let elem = document.getElementById(name);
+				loaded_data.map(function(item) {
+					let option = document.createElement('option');
+					option.value = item;
+					elem.appendChild(option);
+				});
+			}
+		}),
+
+		// Applying other options.
+		load_options('sync', g_other_options_names).then(function(items) {
+			let style = document.createElement('style');
+			style.textContent = `
+				html {
+					width: ${items.window_width}px;
+				}
+				input[type="email"],
+				input[type="number"],
+				input[type="password"],
+				input[type="text"],
+				input[type="url"] {
+					font: ${items.input_font};
+				}
+				textarea {
+					font: ${items.textarea_font};
+				}
+			`;
+			document.head.appendChild(style);
+
+			let password = document.getElementById('password');
+			password.type = items.hide_passwords ? 'password' : 'text';
+		}),
+
+		// Loading quick options.
+		load_options('sync', quick_option_names).then(function(items) {
+			for (let name of quick_option_names) {
+				input_value(name, items[name]);
+			}
+		}),
+	]).then(function() {
+		// Split the initial URI only after all other promises have resolved.
+		// In other words, wait until all options have loaded.
+		full_uri_to_fields();
+	}, alert_error_reporter);
+
+	// Buttons.
+	document.getElementById('options').addEventListener('click', function(ev) {
+		document.getElementById('options_panel').classList.toggle('hidden');
+	});
+	document.getElementById('background').addEventListener('click', open_in_new_background_tab);
+	document.getElementById('tab').addEventListener('click', open_in_new_tab);
+	document.getElementById('window').addEventListener('click', open_in_new_window);
+	document.getElementById('incognito').addEventListener('click', open_in_new_incognito);
+	document.getElementById('other_options').addEventListener('click', function(ev) {
+		ev.preventDefault();
+		chrome.runtime.openOptionsPage();
+	});
+	document.getElementById('form').addEventListener('submit', function(ev) {
+		ev.preventDefault();
+		open_in_current_tab();
+	});
+
+	// Main interaction.
+	document.getElementById('form').addEventListener('input', function(ev) {
+		if (/^(uri|search_sep|hash_sep)$/.test(ev.target.id)) {
+			full_uri_to_fields();
+		} else {
+			fields_to_full_uri();
+		}
+	});
+
+	// Auto-size.
+	document.getElementById('search').addEventListener('input', auto_size_textarea);
+	document.getElementById('hash').addEventListener('input', auto_size_textarea);
+}
+
+// This script is being included with the "defer" attribute, which means it
+// will only be executed after the document has been parsed.
+init();

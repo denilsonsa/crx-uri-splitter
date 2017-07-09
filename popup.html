@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+<title>URI Splitter</title>
+<script src="common.js" defer></script>
+<script src="punycode-v1.4.1.js" defer></script>
+<script src="popup.js" defer></script>
+<style>
+html, body, form, p, div {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+html {
+	min-width: 300px;
+	max-width: 800px;
+	margin: 0;
+	padding: 4px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+body {
+	/* Chrome injects a stylesheet that sets the font-size of body to 75% */
+	font-size: 1em;
+}
+
+input[type="submit"] {
+	font-weight: bold;
+}
+input[type="submit"],
+input[type="button"] {
+	font-size: 1rem;
+}
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="text"],
+input[type="url"],
+textarea {
+	box-sizing: border-box;
+	resize: none;
+	min-width: 1em;
+	min-height: 1em;
+	line-height: 1.5;
+	padding: 0 4px;
+	color: black;
+	background: white;
+	overflow: hidden;
+}
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="text"],
+input[type="url"],
+textarea,
+fieldset {
+	border: 1px solid #CCC;
+	margin: 0;
+}
+input:-webkit-autofill {
+	background: yellow;
+}
+fieldset {
+	border-radius: 4px;
+}
+input::placeholder,
+textarea::placeholder {
+	color: #AAA;
+	font-style: italic;
+}
+input:invalid,
+textarea:invalid {
+	background: #FCC;
+	color: black;
+}
+.group:nth-child(1n+2) {
+	margin-top: 8px;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.row > input[type="number"],
+.row > input[type="password"],
+.row > input[type="text"],
+.row > input[type="url"],
+.row > textarea {
+	flex: 1 1 auto;
+	width: auto;
+}
+.row > .panel {
+	flex: 1 1 auto;
+	width: auto;
+}
+.row:nth-child(1n+2) > input[type="number"],
+.row:nth-child(1n+2) > input[type="password"],
+.row:nth-child(1n+2) > input[type="text"],
+.row:nth-child(1n+2) > input[type="url"],
+.row:nth-child(1n+2) > textarea {
+	border-top-width: 0;
+}
+.row:first-child > input[type="number"]:nth-child(1n+2),
+.row:first-child > input[type="password"]:nth-child(1n+2),
+.row:first-child > input[type="text"]:nth-child(1n+2),
+.row:first-child > input[type="url"]:nth-child(1n+2),
+.row:first-child > textarea:nth-child(1n+2) {
+	border-left-width: 0;
+}
+.row:first-child > input[type="number"]:first-child,
+.row:first-child > input[type="password"]:first-child,
+.row:first-child > input[type="text"]:first-child,
+.row:first-child > input[type="url"]:first-child,
+.row:first-child > textarea:first-child {
+	border-top-left-radius: 4px;
+}
+.row:first-child > input[type="number"]:last-child,
+.row:first-child > input[type="password"]:last-child,
+.row:first-child > input[type="text"]:last-child,
+.row:first-child > input[type="url"]:last-child,
+.row:first-child > textarea:last-child {
+	border-top-right-radius: 4px;
+}
+.row:last-child > input[type="number"]:first-child,
+.row:last-child > input[type="password"]:first-child,
+.row:last-child > input[type="text"]:first-child,
+.row:last-child > input[type="url"]:first-child,
+.row:last-child > textarea:first-child {
+	border-bottom-left-radius: 4px;
+}
+.row:last-child > input[type="number"]:last-child,
+.row:last-child > input[type="password"]:last-child,
+.row:last-child > input[type="text"]:last-child,
+.row:last-child > input[type="url"]:last-child,
+.row:last-child > textarea:last-child {
+	border-bottom-right-radius: 4px;
+}
+
+input#protocol {
+	width: 10ch;
+	flex: 0 0 auto;
+}
+input#port {
+	width: 11ch;
+	flex: 0 0 auto;
+}
+input#search_sep,
+input#hash_sep {
+	width: 6ch;
+}
+input#hash_sep {
+	border-left-width: 0;
+}
+
+#options_panel table {
+	border-collapse: collapse;
+	border: 0;
+	margin: 0;
+}
+#options_panel table td,
+#options_panel table th {
+	border: 0;
+	padding: 0;
+	text-align: left;
+	vertical-align: middle;
+	font: inherit;
+	white-space: nowrap;
+}
+#options_panel table th.kind,
+#options_panel table td.kind {
+	text-align: center;
+}
+#options_panel table td label {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+#options_panel table tbody tr:hover {
+	background: #EEE;
+}
+#options_panel table tbody tr td label:hover {
+	background: #DDD;
+}
+
+.row.buttons > input[type="submit"],
+.row.buttons > input[type="button"] {
+	flex: 1 1 auto;
+	width: 3em;
+	padding: 2px 0;
+}
+.row.buttons > input#options {
+	width: auto;
+	flex: 0 0 auto;
+	padding: 2px;
+}
+#options_panel.hidden {
+	display: none;
+}
+</style>
+</head>
+<body>
+<form id="form">
+
+<div class="group">
+	<div class="row">
+		<input type="url" id="uri" placeholder="http://example.com/" accesskey="l">
+	</div>
+</div>
+
+<div class="group">
+	<div class="row">
+		<input type="text" id="protocol" list="protocols" placeholder="protocol" pattern="[-a-zA-Z0-9+.]+" accesskey="">
+		<input type="text" id="username" placeholder="username" accesskey="u">
+		<input type="text" id="password" placeholder="password" accesskey="">
+	</div>
+	<div class="row">
+		<input type="text" id="hostname" list="hostnames" placeholder="hostname" accesskey="d" pattern="[^\s!&quot;#$%&'()*+,/:;&lt;=&gt;?@\\^_`{|}~[\]]+|\[[0-9a-fA-F:]+\]">
+		<input type="number" id="port" min="0" max="65535" step="1" list="ports" placeholder="port" accesskey="">
+	</div>
+	<div class="row">
+		<input type="text" id="pathname" list="pathnames" placeholder="pathname" accesskey="p">
+	</div>
+	<div class="row">
+		<textarea id="search" placeholder="?search" rows="1" accesskey="s"></textarea>
+	</div>
+	<div class="row">
+		<textarea id="hash" placeholder="#hash" rows="1" accesskey="h"></textarea>
+	</div>
+</div>
+
+<div class="group">
+	<div class="row buttons">
+		<input type="button" id="options" value="⚙" title="Options" accesskey="o">
+		<input type="submit" id="open" value="this tab" title="" accesskey="">
+		<input type="button" id="tab" value="new tab" title="" accesskey="t">
+		<input type="button" id="background" value="background" title="" accesskey="b">
+		<input type="button" id="window" value="window" title="" accesskey="w">
+		<input type="button" id="incognito" value="incognito" title="" accesskey="i">
+	</div>
+</div>
+
+<div class="group hidden" id="options_panel">
+	<fieldset>
+		<legend>Quick options</legend>
+		<table>
+			<thead>
+				<tr>
+					<th class="kind">?search</th>
+					<th class="kind">#hash</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<!-- An empty href="" would be considered "visited", rendering this link purple instead of blue. -->
+					<td colspan="3"><a href="#" id="other_options">Other options…</a></td>
+				</tr>
+			</tfoot>
+			<tbody>
+				<tr>
+					<td class="kind"><label><input type="checkbox" id="search_sort"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_sort"></label></td>
+					<td class="label">Sort params</td>
+				</tr>
+				<tr>
+					<td class="kind"><label><input type="checkbox" id="search_encode"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_encode"></label></td>
+					<td class="label">Decode/encode params</td>
+				</tr>
+				<tr>
+					<td class="kind"><label><input type="checkbox" id="search_plus"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_plus"></label></td>
+					<td class="label">Decode "+" as space</td>
+				</tr>
+				<tr>
+					<td class="kind"><label><input type="checkbox" id="search_trim"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_trim"></label></td>
+					<td class="label">Trim whitespace</td>
+				</tr>
+				<tr>
+					<td class="kind"><input type="text" id="search_sep" title="Confused? Just use &amp;"></td>
+					<td class="kind"><input type="text" id="hash_sep" title="Confused? Just use &amp;"></td>
+					<td class="label">Separator chars</td>
+				</tr>
+			</tbody>
+		</table>
+	</fieldset>
+</div>
+
+<datalist id="protocols">
+</datalist>
+<datalist id="ports">
+</datalist>
+<datalist id="hostnames">
+</datalist>
+<datalist id="pathnames">
+</datalist>
+
+</form>
+</body>
+</html>
