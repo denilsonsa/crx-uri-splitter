@@ -476,7 +476,12 @@ function keydown_handler(ev) {
 		(ev.key == 'Alt' && modifiers_ignoring_shift === only_alt) ||
 		((ev.key == 'Meta' || ev.key == 'Control') && modifiers_ignoring_shift === platform_control)
 	) {
-		show_shortcuts_after(375);
+		let shortcuts_overlay = document.getElementById('shortcuts_overlay');
+		if (shortcuts_overlay && shortcuts_overlay.classList.contains('visible')) {
+			hide_shortcuts();
+		} else {
+			show_shortcuts_after(375);
+		}
 	} else if (ev.key == 'Shift') {
 		// Do nothing.
 	} else {
