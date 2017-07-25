@@ -25,6 +25,7 @@ function set_status(kind, msg) {
 function clear_status() {
 	clearTimeout(g_status_timeout);
 	g_status_timeout = null;
+
 	var elem = document.getElementById('status');
 	elem.textContent = '';
 	elem.classList.remove('ok', 'error');

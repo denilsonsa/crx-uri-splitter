@@ -350,9 +350,40 @@ function open_in_new_incognito() {
 // referenced from keys "4", "x" and "X".
 var g_keyboard_shortcut_map = {};
 
+var g_shortcuts_overlay_timeout = null;
+function show_shortcuts() {
+	clearTimeout(g_shortcuts_overlay_timeout);
+	g_shortcuts_overlay_timeout = null;
+
+	var elem = document.getElementById('shortcuts_overlay');
+	for (let shadow of elem.getElementsByClassName('shadow')) {
+		let field = document.getElementById(shadow.dataset.fieldid);
+		if (field) {
+			let rect = field.getBoundingClientRect();
+			shadow.style.top = rect.top + 'px';
+			shadow.style.left = rect.left + 'px';
+			shadow.style.width = rect.width + 'px';
+			shadow.style.height = rect.height + 'px';
+		}
+	}
+	elem.classList.add('visible');
+}
+function show_shortcuts_after(delay) {
+	clearTimeout(g_shortcuts_overlay_timeout);
+	g_shortcuts_overlay_timeout = setTimeout(show_shortcuts, delay);
+}
+function hide_shortcuts() {
+	clearTimeout(g_shortcuts_overlay_timeout);
+	g_shortcuts_overlay_timeout = null;
+
+	var elem = document.getElementById('shortcuts_overlay');
+	elem.classList.remove('visible');
+}
+
 // Initialization.
 function prepare_keyboard_shortcuts(hide_tooltips) {
 	var is_mac = /\bMac OS X\b/.test(window.navigator.appVersion);
+	var shortcuts_overlay = document.getElementById('shortcuts_overlay');
 	for (let elem of document.querySelectorAll('[data-keyboard]')) {
 		let keys = elem.dataset.keyboard.trim().split(/\s+/);
 		for (let key of keys) {
@@ -375,6 +406,16 @@ function prepare_keyboard_shortcuts(hide_tooltips) {
 			elem.title = '';
 		} else {
 			elem.title += '\nShortcut' + (keys.length == 1 ? '' : 's') + ': ' + keys.join(', ');
+
+			let shadow = document.createElement('div');
+			shadow.setAttribute('class', 'shadow');
+			shadow.dataset.fieldid = elem.id;
+			shortcuts_overlay.appendChild(shadow);
+			for (let key of keys) {
+				let elem = document.createElement('kbd');
+				elem.textContent = (key.length == 1) ? '⌥' + key : key;
+				shadow.appendChild(elem);
+			}
 		}
 		// Idea: Show keyboard shorcuts when ctrl/alt/meta is pressed, and hide
 		// them when not needed anymore.
@@ -399,6 +440,7 @@ function keydown_handler(ev) {
 		(ev.altKey   ? only_alt   : 0) |
 		(ev.metaKey  ? only_meta  : 0)
 	);
+	let modifiers_ignoring_shift = modifiers & (0xFF ^ only_shift);
 	let is_mac = /\bMac OS X\b/.test(window.navigator.appVersion);
 	let platform_control = is_mac ? only_meta : only_ctrl;
 
@@ -417,17 +459,28 @@ function keydown_handler(ev) {
 			// "Ctrl+Shift+click" opens a link in a new tab.
 			open_in_new_tab();
 		}
-	} else if (modifiers === only_alt || modifiers === platform_control) {
+	} else if (modifiers_ignoring_shift === only_alt || modifiers_ignoring_shift === platform_control) {
 		let elem = g_keyboard_shortcut_map[ev.key];
 		if (elem) {
-			elem.focus();
 			if (elem.tagName.toLowerCase() == 'button' || elem.type == 'button' || elem.type == 'submit') {
 				elem.click();
 			} else {
+				elem.focus();
 				elem.select();
 			}
 			ev.preventDefault();
 		}
+	}
+
+	if (
+		(ev.key == 'Alt' && modifiers_ignoring_shift === only_alt) ||
+		((ev.key == 'Meta' || ev.key == 'Control') && modifiers_ignoring_shift === platform_control)
+	) {
+		show_shortcuts_after(375);
+	} else if (ev.key == 'Shift') {
+		// Do nothing.
+	} else {
+		hide_shortcuts();
 	}
 }
 

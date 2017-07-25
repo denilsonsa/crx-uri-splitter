@@ -153,6 +153,36 @@ input#hash_sep {
 	border-left-width: 0;
 }
 
+#shortcuts_overlay {
+	opacity: 0;
+	transition: opacity 250ms;
+	pointer-events: none;
+}
+#shortcuts_overlay.visible {
+	opacity: 1;
+}
+#shortcuts_overlay .shadow {
+	position: absolute;
+	background: rgba(255, 255, 255, 0.75);
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+#shortcuts_overlay .shadow kbd {
+	flex: 0 0 auto;
+	/* Keyboard shortcut styling inspired by https://codepen.io/dudleystorey/pen/gkrsq */
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 0.1em 0.5em;
+	margin: 0 0.2em;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 0 0 2px #fff inset;
+	background: #f7f7f7;
+}
+
 #options_panel table {
 	border-collapse: collapse;
 	border: 0;
@@ -211,21 +241,21 @@ input#hash_sep {
 <div class="group">
 	<div class="row">
 		<input type="text" id="protocol" list="protocols" pattern="[-a-zA-Z0-9+.]+" placeholder="protocol" title="Protocol" data-keyboard="2">
-		<input type="text" id="username" placeholder="username" title="Username" data-keyboard="3 U">
+		<input type="text" id="username" placeholder="username" title="Username" data-keyboard="3 U @">
 		<input type="text" id="password" placeholder="password" title="Password" data-keyboard="4">
 	</div>
 	<div class="row">
 		<input type="text" id="hostname" list="hostnames" pattern="[^\s!&quot;#$%&'()*+,/:;&lt;=&gt;?@\\^_`{|}~[\]]+|\[[0-9a-fA-F:]+\]" placeholder="hostname" title="Hostname (domain name)" data-keyboard="5 D">
-		<input type="number" id="port" list="ports" min="0" max="65535" step="1" placeholder="port" title="TCP port" data-keyboard="6">
+		<input type="number" id="port" list="ports" min="0" max="65535" step="1" placeholder="port" title="TCP port" data-keyboard="6 :">
 	</div>
 	<div class="row">
-		<input type="text" id="pathname" list="pathnames" placeholder="pathname" title="Pathname" data-keyboard="7 P">
+		<input type="text" id="pathname" list="pathnames" placeholder="pathname" title="Pathname" data-keyboard="7 P /">
 	</div>
 	<div class="row">
-		<textarea id="search" placeholder="?search" rows="1" title="Search string (query)" data-keyboard="8 Q S"></textarea>
+		<textarea id="search" placeholder="?search" rows="1" title="Search string (query)" data-keyboard="8 Q S ?"></textarea>
 	</div>
 	<div class="row">
-		<textarea id="hash"   placeholder="#hash"   rows="1" title="Hash (fragment)"       data-keyboard="9 F H"></textarea>
+		<textarea id="hash"   placeholder="#hash"   rows="1" title="Hash (fragment)"       data-keyboard="9 F H #"></textarea>
 	</div>
 </div>
 
@@ -287,6 +317,8 @@ input#hash_sep {
 		</table>
 	</fieldset>
 </div>
+
+<div id="shortcuts_overlay"></div>
 
 <datalist id="protocols"></datalist>
 <datalist id="ports"    ></datalist>
