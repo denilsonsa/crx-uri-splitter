@@ -2,10 +2,11 @@
 <html>
 <head>
 <meta charset="utf8">
-<title>URI Splitter</title>
 <script src="common.js" defer></script>
 <script src="punycode-v1.4.1.js" defer></script>
 <script src="popup.js" defer></script>
+<link rel="stylesheet" href="common.css">
+<title>URI Splitter</title>
 <style>
 html, body, form, p, div {
 	display: block;
@@ -18,62 +19,12 @@ html {
 	margin: 0;
 	padding: 4px;
 	box-sizing: border-box;
-	font-size: 14px;
-}
-body {
-	/* Chrome injects a stylesheet that sets the font-size of body to 75% */
-	font-size: 1em;
 }
 
-input[type="submit"] {
-	font-weight: bold;
-}
-input[type="submit"],
-input[type="button"] {
-	font-size: 1rem;
-}
-input[type="email"],
-input[type="number"],
-input[type="password"],
-input[type="text"],
-input[type="url"],
 textarea {
-	box-sizing: border-box;
-	resize: none;
-	min-width: 1em;
 	min-height: 1em;
-	line-height: 1.5;
-	padding: 0 4px;
-	color: black;
-	background: white;
-	overflow: hidden;
 }
-input[type="email"],
-input[type="number"],
-input[type="password"],
-input[type="text"],
-input[type="url"],
-textarea,
-fieldset {
-	border: 1px solid #CCC;
-	margin: 0;
-}
-input:-webkit-autofill {
-	background: yellow;
-}
-fieldset {
-	border-radius: 4px;
-}
-input::placeholder,
-textarea::placeholder {
-	color: #AAA;
-	font-style: italic;
-}
-input:invalid,
-textarea:invalid {
-	background: #FCC;
-	color: black;
-}
+
 .group:nth-child(1n+2) {
 	margin-top: 8px;
 }
@@ -170,15 +121,17 @@ input#hash_sep {
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 	align-items: center;
+	overflow: hidden;
 }
 #shortcuts_overlay .shadow kbd {
 	flex: 0 0 auto;
 	/* Keyboard shortcut styling inspired by https://codepen.io/dudleystorey/pen/gkrsq */
 	display: inline-block;
+	line-height: 1.0;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-	padding: 0.1em 0.5em;
-	margin: 0 0.2em;
+	padding: 0.1em 0.375em;
+	margin: 0 0.2em 1px 0.2em;
 	box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 0 0 2px #fff inset;
 	background: #f7f7f7;
 }

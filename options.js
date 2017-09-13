@@ -81,6 +81,12 @@ function apply_font_style(event_or_id) {
 	}
 	var style_element = document.getElementById(id + '_style');
 	style_element.textContent = text;
+
+	if (id === 'textarea_font') {
+		for (let name of g_datalist_names) {
+			auto_size_textarea(document.getElementById(name));
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

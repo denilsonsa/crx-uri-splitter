@@ -355,15 +355,16 @@ function show_shortcuts() {
 	clearTimeout(g_shortcuts_overlay_timeout);
 	g_shortcuts_overlay_timeout = null;
 
+	var margin = 0;
 	var elem = document.getElementById('shortcuts_overlay');
 	for (let shadow of elem.getElementsByClassName('shadow')) {
 		let field = document.getElementById(shadow.dataset.fieldid);
 		if (field) {
 			let rect = field.getBoundingClientRect();
-			shadow.style.top = rect.top + 'px';
-			shadow.style.left = rect.left + 'px';
-			shadow.style.width = rect.width + 'px';
-			shadow.style.height = rect.height + 'px';
+			shadow.style.top = (rect.top + margin) + 'px';
+			shadow.style.left = (rect.left + margin) + 'px';
+			shadow.style.width  = (rect.width - 2 * margin) + 'px';
+			shadow.style.height = (rect.height - 2 * margin) + 'px';
 		}
 	}
 	elem.classList.add('visible');
