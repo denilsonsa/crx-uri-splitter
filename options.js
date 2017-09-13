@@ -120,7 +120,7 @@ function init() {
 	load_options('sync', [].concat(g_datalist_names, g_other_options_names)).then(function(items) {
 		for (let name of g_datalist_names) {
 			let loaded_data = items[name];
-			var elem = document.getElementById(name);
+			let elem = document.getElementById(name);
 			elem.value = loaded_data.map(
 				item => ('' + item).trim()
 			).filter(

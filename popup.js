@@ -260,7 +260,7 @@ function fields_to_full_uri() {
 				? '/'
 				: ''
 			) +
-			s.pathname.replace(/[%#\? ]/g, percent_encode)
+			s.pathname.replace(/[%#\\? ]/g, percent_encode)
 		);
 	}
 	if (s.search) {
@@ -525,11 +525,11 @@ function init() {
 			for (let name of g_datalist_names) {
 				let loaded_data = items[name];
 				let elem = document.getElementById(name);
-				loaded_data.map(function(item) {
+				for (let item of loaded_data) {
 					let option = document.createElement('option');
 					option.value = item;
 					elem.appendChild(option);
-				});
+				}
 			}
 		}),
 
@@ -553,9 +553,6 @@ function init() {
 				}
 			`;
 			document.head.appendChild(style);
-
-			let password = document.getElementById('password');
-			password.type = items.hide_passwords ? 'password' : 'text';
 
 			prepare_keyboard_shortcuts(items.hide_tooltips);
 		}),
