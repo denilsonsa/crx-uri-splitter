@@ -151,6 +151,14 @@ function init() {
 		document.getElementById('input_font').addEventListener('input', apply_font_style);
 		document.getElementById('textarea_font').addEventListener('input', apply_font_style);
 	}, simple_error_reporter);
+
+	document.getElementById('link_to_configurecommands').addEventListener('click', function(ev) {
+		current_tab().then(function(tab) {
+			chrome.tabs.update(tab.id, {'url': 'chrome://extensions/configureCommands'});
+		}, simple_error_reporter);
+
+		ev.preventDefault();
+	});
 }
 
 // This script is being included with the "defer" attribute, which means it

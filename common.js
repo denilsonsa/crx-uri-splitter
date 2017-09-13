@@ -174,3 +174,19 @@ function input_value(id_or_elem, value) {
 
 	throw new Error('Element not supported (not implemented yet)');
 }
+
+// Gets the current Chrome tab, returning a promise.
+function current_tab() {
+	return new Promise(function(resolve, reject) {
+		chrome.tabs.query({
+			'active': true,
+			'currentWindow': true,
+		}, function(tabs) {
+			if (tabs && tabs[0]) {
+				resolve(tabs[0]);
+			} else {
+				reject(new Error('No tab found.'));
+			}
+		});
+	});
+}

@@ -3,22 +3,6 @@
 //////////////////////////////////////////////////////////////////////
 // Misc. convenience functions.
 
-// Gets the current Chrome tab, returning a promise.
-function current_tab() {
-	return new Promise(function(resolve, reject) {
-		chrome.tabs.query({
-			'active': true,
-			'currentWindow': true,
-		}, function(tabs) {
-			if (tabs && tabs[0]) {
-				resolve(tabs[0]);
-			} else {
-				reject(new Error('No tab found.'));
-			}
-		});
-	});
-}
-
 // %-encode the matched character.
 function percent_encode(match) {
 	var replacement = '%' + match.codePointAt(0).toString(16);
