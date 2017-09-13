@@ -536,6 +536,7 @@ function init() {
 		// Applying other options.
 		load_options('sync', g_other_options_names).then(function(items) {
 			let style = document.createElement('style');
+			// Warning: This style is copy-pasted also in options.js.
 			style.textContent = `
 				html {
 					width: ${items.window_width}px;

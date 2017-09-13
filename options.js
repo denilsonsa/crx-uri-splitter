@@ -37,6 +37,53 @@ function simple_error_reporter(err) {
 }
 
 //////////////////////////////////////////////////////////////////////
+// UI - instantaneous feedback for font update
+
+function apply_font_style(event_or_id) {
+	var id;
+	var input_element;
+
+	// For convenience, this function supports two values for the argument.
+	if (typeof event_or_id === 'string') {
+		id = event_or_id;
+		input_element = document.getElementById(id);
+	} else {
+		input_element = event.target;
+		id = input_element.id;
+	}
+
+	if (!input_element.checkValidity()) {
+		return;
+	}
+
+	var value = input_element.value;
+	var style_templates = {
+		// Warning: These styles are copy-pasted also in popup.js.
+		'input_font': `
+			input[type="email"],
+			input[type="number"],
+			input[type="password"],
+			input[type="text"],
+			input[type="url"] {
+				font: ${value};
+			}
+		`,
+		'textarea_font': `
+			textarea {
+				font: ${value};
+			}
+		`,
+	};
+
+	var text = style_templates[id];
+	if (!text) {
+		throw new Error('Invalid id');
+	}
+	var style_element = document.getElementById(id + '_style');
+	style_element.textContent = text;
+}
+
+//////////////////////////////////////////////////////////////////////
 // Misc.
 
 // Save the value of the datalist that was changed.
@@ -93,6 +140,10 @@ function init() {
 			}
 			elem.addEventListener(event_name, debounce(1000, other_option_save));
 		}
+		apply_font_style('input_font');
+		apply_font_style('textarea_font');
+		document.getElementById('input_font').addEventListener('input', apply_font_style);
+		document.getElementById('textarea_font').addEventListener('input', apply_font_style);
 	}, simple_error_reporter);
 }
 
