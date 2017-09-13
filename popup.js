@@ -315,6 +315,23 @@ function quick_option_save(ev) {
 	}, alert_error_reporter);
 }
 
+function quick_option_has_changed(ev) {
+	// Keep the window scrolled at the same position from the bottom.
+
+	var old_scrollY = window.scrollY;
+	var old_scrollHeight = document.body.scrollHeight;
+	// Should be similar to document.body.clientHeight, document.body.offsetHeight.
+	var old_windowHeight = window.innerHeight;
+	var old_distance_from_bottom = old_scrollHeight - (old_scrollY + old_windowHeight);
+
+	full_uri_to_fields(ev);
+
+	var new_windowHeight = window.innerHeight;
+	var new_scrollHeight = document.body.scrollHeight;
+	var new_scrollY = new_scrollHeight - old_distance_from_bottom - new_windowHeight;
+	window.scrollTo(window.scrollX, new_scrollY);
+}
+
 // Open the current URI...
 function open_in_current_tab() {
 	var uri = document.getElementById('uri').value;
@@ -500,13 +517,8 @@ function init() {
 	for (let input of document.querySelectorAll('#options_panel input')) {
 		if (input.type != 'text' && input.type != 'checkbox') continue;
 		quick_option_names.push(input.id);
-		let event_name = 'input';
-		if (/^(checkbox|radio)$/i.test(input.type)) {
-			event_name = 'click';
-			input.addEventListener(event_name, full_uri_to_fields);
-			// full_uri_to_fields() not needed for "input" event, because
-			// that's already handled by <form>'s "input" event handler.
-		}
+		let event_name = (/^(checkbox|radio)$/i.test(input.type) ? 'click' : 'input');
+		input.addEventListener(event_name, quick_option_has_changed);
 		input.addEventListener(event_name, debounce(1000, quick_option_save));
 	}
 
