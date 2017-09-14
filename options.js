@@ -92,6 +92,8 @@ function apply_font_style(event_or_id) {
 //////////////////////////////////////////////////////////////////////
 // Misc.
 
+const CONFIGURE_COMMANDS_URL = 'chrome://extensions/configureCommands';
+
 // Save the value of the datalist that was changed.
 function datalist_save(ev) {
 	var elem = ev.target;
@@ -152,17 +154,36 @@ function init() {
 		document.getElementById('textarea_font').addEventListener('input', apply_font_style);
 	}, simple_error_reporter);
 
+	// Links to chrome:// are blocked by the browser, so I need these event
+	// handler functions to make them work as the user would expect.
 	document.getElementById('link_to_configurecommands').addEventListener('click', function(ev) {
-		current_tab().then(function(tab) {
-			chrome.tabs.update(tab.id, {'url': 'chrome://extensions/configureCommands'});
-		}, simple_error_reporter);
-
+		if (ev.shiftKey) {
+			if (ev.ctrlKey || ev.metaKey) {
+				open_url_in_new_tab(CONFIGURE_COMMANDS_URL);
+				ev.preventDefault();
+			} else {
+				open_url_in_new_window(CONFIGURE_COMMANDS_URL);
+				ev.preventDefault();
+			}
+		} else {
+			if (ev.ctrlKey || ev.metaKey) {
+				open_url_in_new_background_tab(CONFIGURE_COMMANDS_URL);
+				ev.preventDefault();
+			} else {
+				open_url_in_this_tab(CONFIGURE_COMMANDS_URL);
+				ev.preventDefault();
+			}
+		}
+	});
+	document.getElementById('link_to_configurecommands').addEventListener('auxclick', function(ev) {
+		open_url_in_new_background_tab(CONFIGURE_COMMANDS_URL);
 		ev.preventDefault();
 	});
 }
 
 // This script is being included with the "defer" attribute, which means it
 // will only be executed after the document has been parsed.
+DEFAULT_ERROR_REPORTER = simple_error_reporter;
 init();
 
 

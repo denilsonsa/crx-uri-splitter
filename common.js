@@ -12,6 +12,7 @@ const g_datalist_names = [
 
 const g_other_options_names = [
 	'hide_tooltips',
+	'new_tab_next_to_current',
 	'window_width',
 	'input_font',
 	'textarea_font',
@@ -36,6 +37,7 @@ const g_default_options = {
 	'pathnames': [],
 	// Other options:
 	'hide_tooltips': false,
+	'new_tab_next_to_current': false,
 	'window_width': 500,
 	'input_font': '1em/1.66 sans-serif',
 	'textarea_font': '1em/1.66 monospace',
@@ -189,4 +191,37 @@ function current_tab() {
 			}
 		});
 	});
+}
+
+// options.js and popup.js will put here their specific error reporting
+// functions.
+var DEFAULT_ERROR_REPORTER = null;
+
+function open_url_in_this_tab(url) {
+	current_tab().then(function(tab) {
+		chrome.tabs.update(tab.id, {'url': url});
+	}, DEFAULT_ERROR_REPORTER);
+}
+function _open_url_in_new_tab(url, active) {
+	load_options('sync', ['new_tab_next_to_current']).then(function(items) {
+		if (items['new_tab_next_to_current']) {
+			current_tab().then(function(tab) {
+				chrome.tabs.create({'url': url, 'index': tab.index + 1, 'active': active});
+			}, DEFAULT_ERROR_REPORTER);
+		} else {
+			chrome.tabs.create({'url': url, 'active': active});
+		}
+	}, DEFAULT_ERROR_REPORTER);
+}
+function open_url_in_new_tab(url) {
+	_open_url_in_new_tab(url, true);
+}
+function open_url_in_new_background_tab(url) {
+	_open_url_in_new_tab(url, false);
+}
+function open_url_in_new_window(url) {
+	chrome.windows.create({'url': url});
+}
+function open_url_in_new_incognito(url) {
+	chrome.windows.create({'url': url, 'incognito': true});
 }

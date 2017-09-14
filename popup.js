@@ -319,25 +319,23 @@ function quick_option_has_changed(ev) {
 // Open the current URI...
 function open_in_current_tab() {
 	var uri = document.getElementById('uri').value;
-	current_tab().then(function(tab) {
-		chrome.tabs.update(tab.id, {'url': uri});
-	}, alert_error_reporter);
+	open_url_in_this_tab(uri);
 }
 function open_in_new_tab() {
 	var uri = document.getElementById('uri').value;
-	chrome.tabs.create({'url': uri, 'active': true});
+	open_url_in_new_tab(uri);
 }
 function open_in_new_background_tab() {
 	var uri = document.getElementById('uri').value;
-	chrome.tabs.create({'url': uri, 'active': false});
+	open_url_in_new_background_tab(uri);
 }
 function open_in_new_window() {
 	var uri = document.getElementById('uri').value;
-	chrome.windows.create({'url': uri});
+	open_url_in_new_window(uri);
 }
 function open_in_new_incognito() {
 	var uri = document.getElementById('uri').value;
-	chrome.windows.create({'url': uri, 'incognito': true});
+	open_url_in_new_incognito(uri);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -602,4 +600,5 @@ function init() {
 
 // This script is being included with the "defer" attribute, which means it
 // will only be executed after the document has been parsed.
+DEFAULT_ERROR_REPORTER = alert_error_reporter;
 init();
