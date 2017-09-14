@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+html {
+	font-size: 14px;
+}
+body {
+	/* Chrome injects a stylesheet that sets the font-size of body to 75% */
+	font-size: 1em;
+}
+
+button[type="submit"],
+input[type="submit"] {
+	font-weight: bold;
+}
+button,
+input[type="submit"],
+input[type="button"] {
+	font-size: 1rem;
+}
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="text"],
+input[type="url"],
+textarea {
+	box-sizing: border-box;
+	resize: none;  /* Because we have JavaScript auto-sizing. */
+	min-width: 1em;
+	min-height: 1em;
+	line-height: 1.5;
+	padding: 0 4px;
+	color: black;
+	background: white;
+	overflow: hidden;
+}
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="text"],
+input[type="url"],
+textarea,
+fieldset {
+	border: 1px solid #CCC;
+	margin: 0;
+}
+fieldset {
+	border-radius: 4px;
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: #AAA;
+	font-style: italic;
+}
+input:invalid,
+textarea:invalid {
+	background: #FCC;
+	color: black;
+}
