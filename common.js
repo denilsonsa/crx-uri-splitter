@@ -33,7 +33,9 @@ const g_default_options = {
 		'8080',
 		'8888',
 	],
-	'hostnames': [],
+	'hostnames': [
+		'127.0.0.1',
+	],
 	'pathnames': [],
 	// Other options:
 	'hide_tooltips': false,
