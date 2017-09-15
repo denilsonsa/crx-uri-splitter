@@ -92,8 +92,6 @@ function apply_font_style(event_or_id) {
 //////////////////////////////////////////////////////////////////////
 // Misc.
 
-const CONFIGURE_COMMANDS_URL = 'chrome://extensions/configureCommands';
-
 // Save the value of the datalist that was changed.
 function datalist_save(ev) {
 	var elem = ev.target;
@@ -157,26 +155,28 @@ function init() {
 	// Links to chrome:// are blocked by the browser, so I need these event
 	// handler functions to make them work as the user would expect.
 	document.getElementById('link_to_configurecommands').addEventListener('click', function(ev) {
+		var url = ev.target.href;
 		if (ev.shiftKey) {
 			if (ev.ctrlKey || ev.metaKey) {
-				open_url_in_new_tab(CONFIGURE_COMMANDS_URL);
+				open_url_in_new_tab(url);
 				ev.preventDefault();
 			} else {
-				open_url_in_new_window(CONFIGURE_COMMANDS_URL);
+				open_url_in_new_window(url);
 				ev.preventDefault();
 			}
 		} else {
 			if (ev.ctrlKey || ev.metaKey) {
-				open_url_in_new_background_tab(CONFIGURE_COMMANDS_URL);
+				open_url_in_new_background_tab(url);
 				ev.preventDefault();
 			} else {
-				open_url_in_this_tab(CONFIGURE_COMMANDS_URL);
+				open_url_in_this_tab(url);
 				ev.preventDefault();
 			}
 		}
 	});
 	document.getElementById('link_to_configurecommands').addEventListener('auxclick', function(ev) {
-		open_url_in_new_background_tab(CONFIGURE_COMMANDS_URL);
+		var url = ev.target.href;
+		open_url_in_new_background_tab(url);
 		ev.preventDefault();
 	});
 }
