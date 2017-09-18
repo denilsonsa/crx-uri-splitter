@@ -77,7 +77,7 @@ None.
 
 ### Isn't there an extension with the same name released inside Google?
 
-Yes. I wrote that one too. Read more about it in *History*.
+Yes. I wrote that one too. Read more about it in [*History*](#History).
 
 ### Do you know there is a newer version of punycode.js?
 
