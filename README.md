@@ -12,7 +12,7 @@ Features:
 * Keyboard shortcuts.
 * Intuitive and easy-to-use.
 * Customizable fonts.
-* [Internationalized domain name][idn] support (thanks to [punycode.js][punycode] library)
+* [Internationalized domain name][idn] support (thanks to [punycode.js][punycode] library).
 
 [![Screenshot of an Amazon search page in the extension](images/Example-amazon.png)][cws]
 
@@ -79,12 +79,26 @@ None.
 
 Yes. I wrote that one too. Read more about it in *History*.
 
+### Do you know there is a newer version of punycode.js?
+
+Yes, I know. But [newer versions dropped support for running it inside Browser](https://github.com/bestiejs/punycode.js/commit/cd35cc29f01db597ff0122d314b572b2180687ec).
+
+Credits
+-------
+
+[Mathias Bynens][mb] for writing [punycode.js][punycode].
+
+[MarkVozzo][] for contacting me, giving me one more reason to release this extension to the world.
+
+My wife for re-creating the logo of this extension. And for all support she gives me!
+
 
 [cws]: https://chrome.google.com/webstore/detail/fdfikmgcjjhkdpejagohhojbopclfckn
 [MarkVozzo]: https://twitter.com/MarkVozzo
 [gh]: https://github.com/denilsonsa/crx-uri-splitter/
 [idn]: https://en.wikipedia.org/wiki/Internationalized_domain_name
 [punycode]: https://github.com/bestiejs/punycode.js/tree/v1.4.1
+[mb]: https://mathiasbynens.be/
 [chrome-shortcuts]: https://support.google.com/chrome/answer/157179
 [URI]: https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
 [URL]: https://en.wikipedia.org/wiki/URL

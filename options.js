@@ -188,7 +188,6 @@ init();
 
 
 // TODO:
-// * Publish to Chrome Web Store!
 // Screenshots: 1280x800 or 640x400
 // Promotional images: Small tile - 440x280
 //                     Large tile - 920x680
