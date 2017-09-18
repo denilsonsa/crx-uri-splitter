@@ -3,6 +3,7 @@
 rm -f crx-uri-splitter.zip
 # -j junk (don't record) directory names
 zip -9Xj crx-uri-splitter.zip \
+	common.css \
 	common.js \
 	icon128.png \
 	icon16.png \
