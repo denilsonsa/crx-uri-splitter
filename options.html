@@ -33,6 +33,10 @@ fieldset > p > label:only-child {
 	margin-left: 33%;
 	padding-left: 4px;
 }
+fieldset > div > p {
+	margin: 1ex 0;
+	line-height: normal;
+}
 
 body > p {
 	margin: 0;
@@ -83,7 +87,15 @@ label {
 	<p title="The default shortcut is Ctrl+Shift+L"><label for="link_to_configurecommands">Launch key:</label> <a id="link_to_configurecommands" href="chrome://extensions/configureCommands">Configure Keyboard Shortcuts</a></p>
 </fieldset>
 
-<p><a href="https://github.com/denilsonsa/crx-uri-splitter/">Source-code at GitHub</a></p>
+<fieldset>
+	<legend>About</legend>
+	<div>
+		<p>Created by <a href="http://denilson.sa.nom.br/">Denilson Sá Maia</a>.</p>
+		<p>Full documentation is available at <a href="https://github.com/denilsonsa/crx-uri-splitter/blob/master/README.md">README.md</a>.</p>
+		<p><a href="https://github.com/denilsonsa/crx-uri-splitter/">Source-code available at GitHub</a> (<a href="https://github.com/denilsonsa/crx-uri-splitter/blob/master/LICENSE">MIT license</a>).</p>
+		<p>Includes <a href="https://github.com/bestiejs/punycode.js/tree/v1.4.1">punycode.js</a> by <a href="https://mathiasbynens.be/">Mathias Bynens</a> for <a href="https://en.wikipedia.org/wiki/Internationalized_domain_name">internationalized domain name</a> support.</p>
+	</div>
+</fieldset>
 
 </body>
 </html>

@@ -413,15 +413,10 @@ function prepare_keyboard_shortcuts(hide_tooltips) {
 			shortcuts_overlay.appendChild(shadow);
 			for (let key of keys) {
 				let elem = document.createElement('kbd');
-				elem.textContent = (key.length == 1) ? '⌥' + key : key;
+				elem.textContent = (key.length == 1) ? (is_mac ? '⌘' : '⌃') + key : key;
 				shadow.appendChild(elem);
 			}
 		}
-		// Idea: Show keyboard shorcuts when ctrl/alt/meta is pressed, and hide
-		// them when not needed anymore.
-		// Issue: It requires a lot of effort to do it properly (CSS
-		// positioning, JavaSript), and provides very little gain over the
-		// standard tooltip provided by title attribute.
 	}
 }
 

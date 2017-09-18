@@ -53,11 +53,11 @@ textarea {
 .row:nth-child(1n+2) > textarea {
 	border-top-width: 0;
 }
-.row:first-child > input[type="number"]:nth-child(1n+2),
-.row:first-child > input[type="password"]:nth-child(1n+2),
-.row:first-child > input[type="text"]:nth-child(1n+2),
-.row:first-child > input[type="url"]:nth-child(1n+2),
-.row:first-child > textarea:nth-child(1n+2) {
+.row > input[type="number"]:nth-child(1n+2),
+.row > input[type="password"]:nth-child(1n+2),
+.row > input[type="text"]:nth-child(1n+2),
+.row > input[type="url"]:nth-child(1n+2),
+.row > textarea:nth-child(1n+2) {
 	border-left-width: 0;
 }
 .row:first-child > input[type="number"]:first-child,
@@ -247,12 +247,12 @@ input#hash_sep {
 				<tr>
 					<td class="kind"><label><input type="checkbox" id="search_sort"></label></td>
 					<td class="kind"><label><input type="checkbox" id="hash_sort"></label></td>
-					<td class="label">Sort params</td>
+					<td class="label">Sort parameters</td>
 				</tr>
 				<tr>
 					<td class="kind"><label><input type="checkbox" id="search_encode"></label></td>
 					<td class="kind"><label><input type="checkbox" id="hash_encode"></label></td>
-					<td class="label">Decode/encode params</td>
+					<td class="label">Decode/encode parameters</td>
 				</tr>
 				<tr>
 					<td class="kind"><label><input type="checkbox" id="search_plus"></label></td>
