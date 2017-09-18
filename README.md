@@ -14,15 +14,15 @@ Features:
 * Customizable fonts.
 * [Internationalized domain name][idn] support (thanks to [punycode.js][punycode] library)
 
-![Screenshot of an Amazon search page in the extension](images/Example-amazon.png)
+[![Screenshot of an Amazon search page in the extension](images/Example-amazon.png)][cws]
 
-![Screenshot of httpbin with parameters and HTTP authentication](images/Example-auth.png)
+[![Screenshot of httpbin with parameters and HTTP authentication](images/Example-auth.png)][cws]
 
-![Screenshot of IDN support](images/Example-IDN-microsoft.png)
+[![Screenshot of IDN support](images/Example-IDN-microsoft.png)][cws]
 
-![Screenshot of Wikimapia URL in the extension](images/Example-wikimapia.png)
+[![Screenshot of Wikimapia URL in the extension](images/Example-wikimapia.png)][cws]
 
-![Screenshot of options screen](images/Options.png)
+[![Screenshot of options screen](images/Options.png)][cws]
 
 How to use
 ----------
