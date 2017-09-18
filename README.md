@@ -14,20 +14,36 @@ Features:
 * Customizable fonts.
 * [Internationalized domain name][idn] support (thanks to [punycode.js][punycode] library)
 
+![Screenshot of an Amazon search page in the extension](images/Example-amazon.png)
+
+![Screenshot of httpbin with parameters and HTTP authentication](images/Example-auth.png)
+
+![Screenshot of IDN support](images/Example-IDN-microsoft.png)
+
+![Screenshot of Wikimapia URL in the extension](images/Example-wikimapia.png)
+
+![Screenshot of options screen](images/Options.png)
+
 How to use
 ----------
 
-To activate the extension, just click on ![its icon](./icon16.png) or press `Ctrl+Shift+L` (or `⇧⌘L` on Mac). This shortcut has been chosen because it is similar to [the browser's shortcut to focus the Location bar][chrome-shortcuts] (`Ctrl+L` or `⌘L`).
+To activate the extension, just click on ![its icon](./icon16.png) or press `Ctrl+Shift+L` (or `⇧⌘L` on Mac). This shortcut has been chosen because it is similar to [the browser's shortcut to focus the location bar][chrome-shortcuts] (`Ctrl+L` or `⌘L`).
 
-When the extension is activated, it will automatically focus and select the full URL inside the extension window. This means that, right away, the extension can give a feel similar to the browser Location bar.
+![Screenshot of example.com in the extension](images/Example-example.png)
 
-The extension window has two main regions: the full URL and the individual fields. Any changes done to the main URL will automatically reflect into the individual fields; and any changes on each field will automatically update the full URL.
+When the extension is activated, it will automatically focus and select the full URL inside the extension window. This means that, right away, the extension can give a feel similar to the browser location bar.
+
+The extension window has two main regions: the full URL and the individual fields. Any changes done to the full URL will automatically reflect into the individual fields; and any changes on each field will automatically update the full URL.
 
 After you have finished editing (or just viewing) the URL, you probably want to open it in the current tab, in a new tab, in a new background tab, in a new window, or in a new incognito window. All of these actions can also be done by keyboard, with shortcuts that mimic the basic browser behavior. The only exception is opening in the same window, which can be activated either by `Enter` or by `Alt+Enter`. This was done because `Enter` inserts a newline in multi-line fields.
 
 If you forget the keyboard shortcuts, just press `Ctrl` or `Alt` or `⌘` and all the available shortcuts will be shown. Also, all single-letter shortcuts can be activated either by `Ctrl` (or `⌘`) or by `Alt`. This was implemented so that you can focus on using the extension, instead of trying to remember what keyboard modifier you have to use.
 
-It is possible to tweak the behavior of the multi-line fields by going into the *quick options* (`⚙` button, or `Ctrl+O` or `⌘O`). The default settings should work for most cases, but the options are there in case they don't work for you. You can even set multiple characters as separators (in that case, the first character will be used for joining).
+![Screenshot of the keyboard shortcuts](images/Shortcuts-Mac.png)
+
+It is possible to tweak the behavior of the multi-line fields by going into the *quick options* (`⚙` button, or `Ctrl+O` or `⌘O`). The default settings should work for most cases, but the options are there in case they don't work for you. You can even set multiple characters as separators (in that case, the first character will be used for joining the lines when building the full URL).
+
+![Screenshot of quick options](images/Quick-options.png)
 
 History
 -------
