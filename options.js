@@ -185,10 +185,3 @@ function init() {
 // will only be executed after the document has been parsed.
 DEFAULT_ERROR_REPORTER = simple_error_reporter;
 init();
-
-
-// TODO:
-// Screenshots: 1280x800 or 640x400
-// Promotional images: Small tile - 440x280
-//                     Large tile - 920x680
-//                     Marquee - 1400x560

@@ -13,6 +13,7 @@ const g_datalist_names = [
 const g_other_options_names = [
 	'hide_tooltips',
 	'new_tab_next_to_current',
+	'disable_autocomplete',
 	'window_width',
 	'input_font',
 	'textarea_font',
@@ -40,6 +41,7 @@ const g_default_options = {
 	// Other options:
 	'hide_tooltips': false,
 	'new_tab_next_to_current': false,
+	'disable_autocomplete': false,
 	'window_width': 500,
 	'input_font': '1em/1.66 sans-serif',
 	'textarea_font': '1em/1.66 monospace',

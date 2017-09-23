@@ -545,6 +545,8 @@ function init() {
 			document.head.appendChild(style);
 
 			prepare_keyboard_shortcuts(items.hide_tooltips);
+
+			document.getElementById('form').autocomplete = items.disable_autocomplete ? 'off' : 'on';
 		}),
 
 		// Loading quick options.
