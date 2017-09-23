@@ -13,6 +13,7 @@ Features:
 * Intuitive and easy-to-use.
 * Customizable fonts.
 * [Internationalized domain name][idn] support (thanks to [punycode.js][punycode] library).
+* Chrome sync (your options are synced across devices).
 
 [![Screenshot of an Amazon search page in the extension](images/Example-amazon.png)][cws]
 
@@ -82,6 +83,14 @@ Yes. I wrote that one too. Read more about it in [*History*](#history).
 ### Do you know there is a newer version of punycode.js?
 
 Yes, I know. But [newer versions dropped support for running it inside Browser](https://github.com/bestiejs/punycode.js/commit/cd35cc29f01db597ff0122d314b572b2180687ec).
+
+### How do I customize the fonts?
+
+You use the same syntax as [CSS `font` property](https://developer.mozilla.org/docs/Web/CSS/font).
+
+### I've messed up with the font definition. How do I reset it to the default?
+
+Just delete whatever you wrote in there, and that option will be reset to the default. Then just close and reopen the options screen to see the default font in there.
 
 Credits
 -------
