@@ -152,6 +152,19 @@ function init() {
 		document.getElementById('textarea_font').addEventListener('input', apply_font_style);
 	}, simple_error_reporter);
 
+	chrome.commands.getAll(function(cmds) {
+		var output = document.getElementById('shortcut_key');
+		if (!output) return;
+		for (let cmd of cmds) {
+			if (cmd.name = '_execute_browser_action') {
+				output.value = cmd.shortcut || '(none)';
+				return;
+			}
+		}
+		output.value = '(unknown)';
+		return;
+	});
+
 	// Links to chrome:// are blocked by the browser, so I need these event
 	// handler functions to make them work as the user would expect.
 	document.getElementById('link_to_configurecommands').addEventListener('click', function(ev) {
