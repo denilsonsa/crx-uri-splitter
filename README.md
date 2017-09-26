@@ -28,7 +28,7 @@ Features:
 How to use
 ----------
 
-To activate the extension, just click on ![its icon](./icon16.png) or press `Ctrl+Shift+L` (or `⇧⌘L` on Mac). This shortcut has been chosen because it is similar to [the browser's shortcut to focus the location bar][chrome-shortcuts] (`Ctrl+L` or `⌘L`).
+To activate the extension, just click on ![its icon](./icon16.png) or press `Ctrl+Shift+L` (or `Control+L` on Mac). This shortcut has been chosen because it is similar to [the browser's shortcut to focus the location bar][chrome-shortcuts] (`Ctrl+L` or `⌘L`).
 
 ![Screenshot of example.com in the extension](images/Example-example.png)
 
@@ -91,6 +91,10 @@ You use the same syntax as [CSS `font` property](https://developer.mozilla.org/d
 ### I've messed up with the font definition. How do I reset it to the default?
 
 Just delete whatever you wrote in there, and that option will be reset to the default. Then just close and reopen the options screen to see the default font in there.
+
+### Why is the default shortcut for launching this extension different on Mac?
+
+Because Chrome refuses to use `Command+Shift+L` as the shortcut. (Why? I don't know!) Thus, I've changed it to `Control+L` (AKA `MacCtrl+L`) instead.
 
 Credits
 -------
