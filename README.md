@@ -96,6 +96,10 @@ Just delete whatever you wrote in there, and that option will be reset to the de
 
 Because Chrome refuses to use `Command+Shift+L` as the shortcut. (Why? I don't know!) Thus, I've changed it to `Control+L` (AKA `MacCtrl+L`) instead.
 
+### Why so many shortcuts for each input field?
+
+So that you don't have to think. For instance, the part after `?` is sometimes called [*query* string](https://en.wikipedia.org/wiki/Query_string), other times [*search* string](https://developer.mozilla.org/en-US/docs/Web/API/HTMLHyperlinkElementUtils/search), but both names mean the same concept. So both `Q` and `S` were chosen as shortcuts. Since it is also prefixed by `?`, that character also works as a shortcut. If you prefer thinking spatially, each field also has a numeric shortcut. Thus, whatever shortcut comes first to your mind, you can use.
+
 Credits
 -------
 
