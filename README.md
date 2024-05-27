@@ -124,3 +124,18 @@ My wife for re-creating the logo of this extension. And for all support she give
 [sr1]: https://www.chromestatus.com/feature/5669008342777856
 [sr2]: https://groups.google.com/a/chromium.org/d/msg/blink-dev/lx-U_JR2BF0/Hsg1fiZiBAAJ
 [console]: https://developers.google.com/web/tools/chrome-devtools/console/
+
+TODO
+----
+
+* [ ] Figure out what should be the extension id for Gecko.
+* Publication-related
+    * [ ] Publish to Mozilla Add-ons
+    * [ ] Publish to Edge
+    * [ ] Publish to Opera
+    * [ ] Test/publish on Safari
+    * [ ] Publish somewhere else?
+* Look and feel
+    * [ ] Custom style for the buttons. Maybe. Remove the rounded border from the middle borders.
+    * [ ] Figure out if automatic dark/light mode works on Firefox.
+    * [ ] MAYBE automatic icon inversion on dark mode. Or just make a new icon anyway.
