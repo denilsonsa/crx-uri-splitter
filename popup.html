@@ -105,13 +105,16 @@ input#hash_sep {
 	opacity: 0;
 	transition: opacity 250ms;
 	pointer-events: none;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 #shortcuts_overlay.visible {
 	opacity: 1;
 }
 #shortcuts_overlay .shadow {
 	position: absolute;
-	background: rgba(255, 255, 255, 0.75);
+	background: rgba(127, 127, 127, 0.5);
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
@@ -131,6 +134,7 @@ input#hash_sep {
 	margin: 0 0.2em 1px 0.2em;
 	box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 0 0 2px #fff inset;
 	background: #f7f7f7;
+	color: black;
 }
 
 #options_panel table {
