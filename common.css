@@ -8,6 +8,16 @@ body {
 	font-size: 1em;
 }
 
+html, body {
+	font-family: sans-serif;
+	background: var(--bg-color);
+	color: var(--fg-color);
+}
+
+:any-link {
+	color: var(--link-color);
+}
+
 button[type="submit"],
 input[type="submit"] {
 	font-weight: bold;
@@ -29,9 +39,11 @@ textarea {
 	min-height: 1em;
 	line-height: 1.5;
 	padding: 0 4px;
-	color: black;
 	background: white;
 	overflow: hidden;
+	border-color: var(--border-color);
+	background: var(--input-color);
+	color: var(--fg-color);
 }
 input[type="email"],
 input[type="number"],
@@ -40,7 +52,7 @@ input[type="text"],
 input[type="url"],
 textarea,
 fieldset {
-	border: 1px solid #CCC;
+	border: 1px solid var(--border-color);
 	margin: 0;
 }
 fieldset {
@@ -49,11 +61,47 @@ fieldset {
 
 input::placeholder,
 textarea::placeholder {
-	color: #AAA;
+	color: var(--placeholder-color);
 	font-style: italic;
 }
 input:invalid,
 textarea:invalid {
-	background: #FCC;
-	color: black;
+	background: var(--invalid-color);
+}
+
+
+/* Colors mostly picked from Firefox default interface */
+
+/* Light color scheme */
+html {
+	/* Text */
+	--fg-color: #15141A;
+	--link-color: #0060DF;
+	--placeholder-color: #818184;
+
+	/* Background */
+	--bg-color: #FFFFFF;  /* #F9F9FB */
+	--invalid-color: #FF9AA2;
+	--input-color: #FFFFFF;
+	--hover-color: #DEDEDF;
+
+	--border-color: #9F9EA1;
+}
+
+/* Dark color scheme */
+@media (prefers-color-scheme: dark) {
+	html {
+		/* Text */
+		--fg-color: #FBFBFE;
+		--link-color: #00DDFF;
+		--placeholder-color: #97979c;
+
+		/* Background */
+		--bg-color: #1C1B22;
+		--invalid-color: #C50042;
+		--input-color: #23222B;
+		--hover-color: #414149;
+
+		--border-color: #7C7B82;
+	}
 }
