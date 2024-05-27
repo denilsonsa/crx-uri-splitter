@@ -528,7 +528,7 @@ function init() {
 			let style = document.createElement('style');
 			// Warning: This style is copy-pasted also in options.js.
 			style.textContent = `
-				html {
+				body {
 					width: ${items.window_width}px;
 				}
 				input[type="email"],
