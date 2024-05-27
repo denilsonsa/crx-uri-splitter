@@ -1,19 +1,17 @@
 {
-  "manifest_version": 2,
-
+  "manifest_version": 3,
   "name": "URI Splitter",
   "short_name": "URI Splitter",
   "description": "Easily and quickly edit the URL/URI from the current page",
-  "author": "Denilson Sá Maia",
-  "version": "0.99",
+  "author": "Denilson S\u00e1 Maia",
+  "version": "1.0",
   "homepage_url": "https://github.com/denilsonsa/crx-uri-splitter/",
-
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "browser_action": {
+  "action": {
     "default_icon": {
       "16": "icon16.png",
       "24": "icon24.png",
@@ -23,7 +21,7 @@
     "default_title": "URI Splitter"
   },
   "commands": {
-    "_execute_browser_action": {
+    "_execute_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+L",
         "mac": "MacCtrl+L"
@@ -32,12 +30,17 @@
   },
   "options_ui": {
     "page": "options.html",
-    "chrome_style": true
+    "open_in_tab": false
   },
   "incognito": "spanning",
-  "offline_enabled": true,
   "permissions": [
     "activeTab",
     "storage"
-  ]
+  ],
+  "content_security_policy": {},
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "uri-splitter@denilson.sa.nom.br"
+    }
+  }
 }
