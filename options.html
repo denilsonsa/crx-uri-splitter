@@ -66,6 +66,22 @@ body > p {
 label {
 	display: block;
 }
+
+/*
+Targeting only Firefox
+https://stackoverflow.com/q/952861
+*/
+@supports (-moz-orient:inline) {
+	/*
+	Disabling this link because there is no alternative for Firefox.
+	https://stackoverflow.com/questions/64330072/how-to-directly-link-to-the-firefox-add-on-keyboard-shortcuts-page
+	https://bugzilla.mozilla.org/show_bug.cgi?id=1538451
+	*/
+	#link_to_configurecommands {
+		display: none;
+	}
+}
+
 </style>
 <style id="input_font_style"></style>
 <style id="textarea_font_style"></style>
