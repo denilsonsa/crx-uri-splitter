@@ -26,6 +26,7 @@ button,
 input[type="submit"],
 input[type="button"] {
 	font-size: 1rem;
+	line-height: 1.5;
 }
 input[type="email"],
 input[type="number"],
@@ -46,6 +47,8 @@ textarea {
 	background: var(--input-color);
 	color: var(--fg-color);
 }
+input[type="button"]:focus,
+input[type="submit"]:focus,
 input[type="email"]:focus,
 input[type="number"]:focus,
 input[type="password"]:focus,
@@ -86,6 +89,9 @@ html {
 	--invalid-color: #FF9AA2;
 	--input-color: #FFFFFF;
 	--hover-color: #DEDEDF;
+	--button-color: #E6E6E6;
+	--button-hover-color: #CECECF;
+	--button-active: #B6B6B6;
 
 	--border-color: #9F9EA1;
 }
@@ -103,6 +109,9 @@ html {
 		--invalid-color: #C50042;
 		--input-color: #23222B;
 		--hover-color: #414149;
+		--button-color: #484854;
+		--button-hover-color: #5C5C6A;
+		--button-active: #1C1C22;
 
 		--border-color: #7C7B82;
 	}

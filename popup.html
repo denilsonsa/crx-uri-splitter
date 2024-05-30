@@ -173,14 +173,22 @@ input#hash_sep {
 	width: 3em;
 	padding: 2px 0;
 	margin: 0;
-	border: 1px solid var(--border-color);
-	/* TODO: nice dark/light button style. */
+	border: 0;
+	color: var(--fg-color);
+	background: var(--button-color);
+}
+.row.buttons > input[type="submit"]:hover,
+.row.buttons > input[type="button"]:hover {
+	background: var(--button-hover-color);
+}
+.row.buttons > input[type="submit"]:active,
+.row.buttons > input[type="button"]:active {
+	background: var(--button-active-color);
 }
 .row.buttons > input#options {
-	width: auto;
+	width: 3ch;
 	flex: 0 0 auto;
-	padding: 2px;
-	margin-right: 2px;
+	margin-right: 3px;
 }
 .row.buttons > input#options,
 .row.buttons > input#open {
@@ -193,7 +201,7 @@ input#hash_sep {
 	border-bottom-right-radius: 4px;
 }
 .row.buttons > input#open ~ input {
-	border-left: 0;
+	margin-left: 1px;
 }
 
 #options_panel.hidden {
