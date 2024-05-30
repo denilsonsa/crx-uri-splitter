@@ -135,5 +135,6 @@ TODO
     * [ ] Publish to Opera
     * [ ] Test/publish on Safari
     * [ ] Publish somewhere else?
+* [ ] Create new screenshots, both Firefox and Chrome
 * [ ] Add a context menu item to open link in the extension pop-up
 * [ ] Redesign the icon to be more readable
