@@ -16,7 +16,7 @@
 //
 // See also: https://stackoverflow.com/a/78088358
 
-if (!apply_icon_theme) {
+if (typeof apply_icon_theme === 'undefined') {
 	importScripts('common.js');
 }
 
