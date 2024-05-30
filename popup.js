@@ -525,6 +525,8 @@ function init() {
 
 		// Applying other options.
 		load_options('sync', g_other_options_names).then(function(items) {
+			apply_ui_theme(items.ui_theme);
+
 			let style = document.createElement('style');
 			// Warning: This style is copy-pasted also in options.js.
 			style.textContent = `

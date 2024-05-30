@@ -107,8 +107,8 @@ function datalist_save(ev) {
 // Also reset the value to default in case the value is invalid.
 function other_option_save(ev) {
 	var elem = ev.target;
-	var name = elem.id;
-	var value = input_value(elem);
+	var name = elem.name || elem.id;
+	var value = elem.type.toLowerCase() === 'radio' ? input_value(elem.name) : input_value(elem);
 	var is_valid= elem.checkValidity();
 	var data = {};
 
@@ -123,10 +123,11 @@ function other_option_save(ev) {
 }
 
 function init() {
+	let options_form = document.getElementById('options_form');
 	load_options('sync', [].concat(g_datalist_names, g_other_options_names)).then(function(items) {
 		for (let name of g_datalist_names) {
 			let loaded_data = items[name];
-			let elem = document.getElementById(name);
+			let elem = options_form[name];
 			elem.value = loaded_data.map(
 				item => ('' + item).trim()
 			).filter(
@@ -138,18 +139,26 @@ function init() {
 		}
 		for (let name of g_other_options_names) {
 			let loaded_data = items[name];
-			let elem = document.getElementById(name);
-			input_value(elem, loaded_data);
-			let event_name = 'input';
-			if (/^(checkbox|radio)$/i.test(elem.type)) {
-				event_name = 'click';
+			input_value(name, loaded_data);
+			let elem = options_form[name];
+			// Either a RadioNodeList, or a new Array of a single element.
+			let elems = elem.length ? elem : [elem];
+			for (let node of elems) {
+				let event_name = 'input';
+				if (/^(checkbox|radio)$/i.test(node.type)) {
+					event_name = 'click';
+				}
+				node.addEventListener(event_name, debounce(1000, other_option_save));
 			}
-			elem.addEventListener(event_name, debounce(1000, other_option_save));
 		}
 		apply_font_style('input_font');
 		apply_font_style('textarea_font');
 		document.getElementById('input_font').addEventListener('input', apply_font_style);
 		document.getElementById('textarea_font').addEventListener('input', apply_font_style);
+		apply_ui_theme(items.ui_theme);
+		for (let radio of options_form['ui_theme']) {
+			radio.addEventListener('click', () => apply_ui_theme(options_form['ui_theme'].value));
+		}
 	}, simple_error_reporter);
 
 	chrome.commands.getAll(function(cmds) {

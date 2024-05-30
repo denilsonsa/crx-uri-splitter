@@ -14,6 +14,11 @@ html, body {
 	color: var(--fg-color);
 }
 
+form {
+	margin: 0;
+	padding: 0;
+}
+
 :any-link {
 	color: var(--link-color);
 }
@@ -78,7 +83,8 @@ textarea:invalid {
 /* Colors mostly picked from Firefox default interface */
 
 /* Light color scheme */
-html {
+html,
+html.light {
 	/* Text */
 	--fg-color: #15141A;
 	--link-color: #0060DF;
@@ -97,6 +103,7 @@ html {
 }
 
 /* Dark color scheme */
+/* Warning! These colors are copy-pasted twice! Once inside @media, another outside. */
 @media (prefers-color-scheme: dark) {
 	html {
 		/* Text */
@@ -115,4 +122,21 @@ html {
 
 		--border-color: #7C7B82;
 	}
+}
+html.dark {
+	/* Text */
+	--fg-color: #FBFBFE;
+	--link-color: #00DDFF;
+	--placeholder-color: #97979c;
+
+	/* Background */
+	--bg-color: #1C1B22;
+	--invalid-color: #C50042;
+	--input-color: #23222B;
+	--hover-color: #414149;
+	--button-color: #484854;
+	--button-hover-color: #5C5C6A;
+	--button-active: #1C1C22;
+
+	--border-color: #7C7B82;
 }

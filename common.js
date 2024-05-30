@@ -14,6 +14,7 @@ const g_other_options_names = [
 	'hide_tooltips',
 	'new_tab_next_to_current',
 	'disable_autocomplete',
+	'ui_theme',
 	'window_width',
 	'input_font',
 	'textarea_font',
@@ -42,6 +43,7 @@ const g_default_options = {
 	'hide_tooltips': false,
 	'new_tab_next_to_current': false,
 	'disable_autocomplete': false,
+	'ui_theme': 'auto',
 	'window_width': 500,
 	'input_font': '1em/1.66 sans-serif',
 	'textarea_font': '1em/1.66 monospace',
@@ -106,6 +108,17 @@ function save_options(which_storage, items) {
 //////////////////////////////////////////////////////////////////////
 // Misc. convenience functions.
 
+// Applies the UI theme.
+function apply_ui_theme(theme) {
+	document.documentElement.classList.remove('light', 'dark');
+	if (theme === 'auto') {
+		return;
+	}
+	if (theme) {
+		document.documentElement.classList.add(theme);
+	}
+}
+
 // Throttles down a function, so that it is only called after the burst of
 // calls (events) have ended.
 function debounce(interval, callback) {
@@ -149,7 +162,12 @@ function input_value(id_or_elem, value) {
 	// The first argument can be either an id (string), or an HTMLElement.
 	var elem = id_or_elem;
 	if (typeof elem == 'string') {
-		elem = document.getElementById(elem);
+		elem = document.getElementById(id_or_elem);
+		if (!elem) {
+			// Not an id? Maybe it's a name attribute.
+			let radio = document.querySelector('input[type="radio"][name="' + id_or_elem + '"]');
+			elem = radio?.closest('form')?.[id_or_elem];  // RadioNodeList object.
+		}
 	}
 	if (!elem) {
 		throw new Error('Element not found');
@@ -158,6 +176,13 @@ function input_value(id_or_elem, value) {
 	// Is this a "get" or "set" call?
 	// "Get" only receives one argument, "set" receives two.
 	var get = (arguments.length == 1);
+
+	if (elem.tagName === undefined) {
+		// Then this is a RadioNodeList object.
+		if (get) return elem.value;
+		elem.value = value;
+		return;
+	}
 
 	var tagname = elem.tagName.toLowerCase();
 	var type = elem.type.toLowerCase();
@@ -171,7 +196,7 @@ function input_value(id_or_elem, value) {
 			if (get) return elem.valueAsNumber;
 			elem.valueAsNumber = value;
 			return;
-		} else if (/^(checkbox|radio)$/.test(type)) {
+		} else if (/^(checkbox)$/.test(type)) {
 			if (get) return elem.checked;
 			elem.checked = value;
 			return;
