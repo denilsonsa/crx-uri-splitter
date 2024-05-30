@@ -159,6 +159,10 @@ function init() {
 		for (let radio of options_form['ui_theme']) {
 			radio.addEventListener('click', () => apply_ui_theme(options_form['ui_theme'].value));
 		}
+		apply_icon_theme(items.icon_theme);
+		for (let radio of options_form['icon_theme']) {
+			radio.addEventListener('click', () => apply_icon_theme(options_form['icon_theme'].value));
+		}
 	}, simple_error_reporter);
 
 	chrome.commands.getAll(function(cmds) {

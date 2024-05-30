@@ -97,7 +97,7 @@ html.light {
 	--hover-color: #DEDEDF;
 	--button-color: #E6E6E6;
 	--button-hover-color: #CECECF;
-	--button-active: #B6B6B6;
+	--button-active-color: #B6B6B6;
 
 	--border-color: #9F9EA1;
 }
@@ -118,7 +118,7 @@ html.light {
 		--hover-color: #414149;
 		--button-color: #484854;
 		--button-hover-color: #5C5C6A;
-		--button-active: #1C1C22;
+		--button-active-color: #1C1C22;
 
 		--border-color: #7C7B82;
 	}
@@ -136,7 +136,7 @@ html.dark {
 	--hover-color: #414149;
 	--button-color: #484854;
 	--button-hover-color: #5C5C6A;
-	--button-active: #1C1C22;
+	--button-active-color: #1C1C22;
 
 	--border-color: #7C7B82;
 }

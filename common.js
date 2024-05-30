@@ -15,6 +15,7 @@ const g_other_options_names = [
 	'new_tab_next_to_current',
 	'disable_autocomplete',
 	'ui_theme',
+	'icon_theme',
 	'window_width',
 	'input_font',
 	'textarea_font',
@@ -44,6 +45,7 @@ const g_default_options = {
 	'new_tab_next_to_current': false,
 	'disable_autocomplete': false,
 	'ui_theme': 'auto',
+	'icon_theme': 'light',
 	'window_width': 500,
 	'input_font': '1em/1.66 sans-serif',
 	'textarea_font': '1em/1.66 monospace',
@@ -117,6 +119,22 @@ function apply_ui_theme(theme) {
 	if (theme) {
 		document.documentElement.classList.add(theme);
 	}
+}
+
+// Applies the icon theme.
+function apply_icon_theme(theme) {
+	// This list of icons is the same as the one in `manifest.json`.
+	// Please remember to copy-paste them when changed.
+	var icons = {
+		"16": "icon-light-16.png",
+		"24": "icon-light-24.png",
+		"32": "icon-light-32.png",
+		"48": "icon-light-48.png"
+	};
+	for (const size of Object.keys(icons)) {
+		icons[size] = icons[size].replace('light', theme);
+	}
+	chrome.action.setIcon({ path: icons });
 }
 
 // Throttles down a function, so that it is only called after the burst of

@@ -28,7 +28,7 @@ Features:
 How to use
 ----------
 
-To activate the extension, just click on ![its icon](./icon16.png) or press `Ctrl+Shift+L` (or `Control+L` on Mac). This shortcut has been chosen because it is similar to [the browser's shortcut to focus the location bar][chrome-shortcuts] (`Ctrl+L` or `⌘L`).
+To activate the extension, just click on ![its icon](./icon-light-16.png) or press `Ctrl+Shift+L` (or `Control+L` on Mac). This shortcut has been chosen because it is similar to [the browser's shortcut to focus the location bar][chrome-shortcuts] (`Ctrl+L` or `⌘L`).
 
 ![Screenshot of example.com in the extension](images/Example-example.png)
 
@@ -135,7 +135,5 @@ TODO
     * [ ] Publish to Opera
     * [ ] Test/publish on Safari
     * [ ] Publish somewhere else?
-* Look and feel
-    * [ ] Custom style for the buttons. Maybe. Remove the rounded border from the middle borders.
-    * [ ] Figure out if automatic dark/light mode works on Firefox.
-    * [ ] MAYBE automatic icon inversion on dark mode. Or just make a new icon anyway.
+* [ ] Add a context menu item to open link in the extension pop-up
+* [ ] Redesign the icon to be more readable

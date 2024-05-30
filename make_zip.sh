@@ -5,14 +5,20 @@ rm -f crx-uri-splitter.zip
 zip -9Xj crx-uri-splitter.zip \
 	common.css \
 	common.js \
-	icon128.png \
-	icon16.png \
-	icon24.png \
-	icon32.png \
-	icon48.png \
+	icon-dark-128.png \
+	icon-dark-16.png \
+	icon-dark-24.png \
+	icon-dark-32.png \
+	icon-dark-48.png \
+	icon-light-128.png \
+	icon-light-16.png \
+	icon-light-24.png \
+	icon-light-32.png \
+	icon-light-48.png \
 	manifest.json \
 	options.html \
 	options.js \
 	popup.html \
 	popup.js \
-	punycode-v1.4.1.js
+	punycode-v1.4.1.js \
+	serviceworker.js
