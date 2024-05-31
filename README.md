@@ -128,7 +128,6 @@ My wife for re-creating the logo of this extension. And for all support she give
 TODO
 ----
 
-* [ ] Figure out what should be the extension id for Gecko.
 * Publication-related
     * [ ] Update to Chrome Web Store
     * [ ] Publish to Mozilla Add-ons
