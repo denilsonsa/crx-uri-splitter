@@ -130,11 +130,11 @@ TODO
 
 * [ ] Figure out what should be the extension id for Gecko.
 * Publication-related
+    * [ ] Update to Chrome Web Store
     * [ ] Publish to Mozilla Add-ons
     * [ ] Publish to Edge
     * [ ] Publish to Opera
-    * [ ] Test/publish on Safari
-    * [ ] Publish somewhere else?
+    * [ ] Test/publish somewhere else? Maybe Safari?
 * [ ] Create new screenshots, both Firefox and Chrome
 * [ ] Add a context menu item to open link in the extension pop-up
 * [ ] Redesign the icon to be more readable
