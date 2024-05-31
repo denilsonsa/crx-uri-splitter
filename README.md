@@ -3,7 +3,10 @@ URI Splitter (Chrome extension)
 
 [Donation - buy me a coffee](https://denilson.sa.nom.br/donate.html)
 
-Chrome extension to easily and quickly edit the URL/URI from the current page. [Get it on Chrome Web Store!][cws]
+Browser extension to easily and quickly edit the URL/URI from the current page.
+
+* [Get it on Chrome Web Store!][cws]
+* [Get it on Mozilla Firefox Add-ons!][amo]
 
 Features:
 
@@ -13,6 +16,7 @@ Features:
 * Intuitive and easy-to-use.
 * Customizable fonts.
 * [Internationalized domain name][idn] support (thanks to [punycode.js][punycode] library).
+* Light and dark color schemes.
 * Chrome sync (your options are synced across devices).
 
 [![Screenshot of an Amazon search page in the extension](images/Example-amazon.png)][cws]
@@ -111,6 +115,7 @@ My wife for re-creating the logo of this extension. And for all support she give
 
 
 [cws]: https://chrome.google.com/webstore/detail/fdfikmgcjjhkdpejagohhojbopclfckn
+[amo]: https://addons.mozilla.org/en-US/firefox/addon/uri-splitter/
 [MarkVozzo]: https://twitter.com/MarkVozzo
 [gh]: https://github.com/denilsonsa/crx-uri-splitter/
 [idn]: https://en.wikipedia.org/wiki/Internationalized_domain_name
@@ -129,11 +134,9 @@ TODO
 ----
 
 * Publication-related
-    * [ ] Update to Chrome Web Store
-    * [ ] Publish to Mozilla Add-ons
     * [ ] Publish to Edge
     * [ ] Publish to Opera
     * [ ] Test/publish somewhere else? Maybe Safari?
-* [ ] Create new screenshots, both Firefox and Chrome
+* [ ] Create new screenshots, both Firefox and Chrome, light and dark
 * [ ] Add a context menu item to open link in the extension pop-up
 * [ ] Redesign the icon to be more readable
