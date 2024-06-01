@@ -3,6 +3,9 @@
 html {
 	font-size: 14px;
 }
+html.mobile {
+	font-size: 16px;
+}
 body {
 	/* Chrome injects a stylesheet that sets the font-size of body to 75% */
 	font-size: 1em;
@@ -30,6 +33,13 @@ form {
 	color: var(--link-color);
 }
 
+button,
+input,
+textarea {
+	font-size: 1rem;
+	line-height: 1.5;
+	padding: 4px 4px;
+}
 button[type="submit"],
 input[type="submit"] {
 	font-weight: bold;
@@ -37,8 +47,6 @@ input[type="submit"] {
 button,
 input[type="submit"],
 input[type="button"] {
-	font-size: 1rem;
-	line-height: 1.5;
 }
 input[type="email"],
 input[type="number"],
@@ -51,8 +59,6 @@ textarea {
 	margin: 0;
 	min-width: 1em;
 	min-height: 1em;
-	line-height: 1.5;
-	padding: 0 4px;
 	background: white;
 	overflow: hidden;
 	border: 1px solid var(--border-color);
