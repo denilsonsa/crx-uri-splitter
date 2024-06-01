@@ -11,6 +11,7 @@ const g_datalist_names = [
 ];
 
 const g_other_options_names = [
+	'autoclose_popup',
 	'hide_tooltips',
 	'new_tab_next_to_current',
 	'disable_autocomplete',
@@ -41,6 +42,7 @@ const g_default_options = {
 	],
 	'pathnames': [],
 	// Other options:
+	'autoclose_popup': true,
 	'hide_tooltips': false,
 	'new_tab_next_to_current': false,
 	'disable_autocomplete': false,
@@ -109,6 +111,16 @@ function save_options(which_storage, items) {
 
 //////////////////////////////////////////////////////////////////////
 // Misc. convenience functions.
+
+// Detects the current platform an adds the relevant classes.
+// For convenience, also returns a promise.
+function detect_platform() {
+	return chrome.runtime.getPlatformInfo().then(function(info) {
+		var platform = info.os === 'android' ? 'mobile' : 'desktop';
+		document.documentElement.classList.add(platform);
+		return platform;
+	});
+}
 
 // Applies the UI theme.
 function apply_ui_theme(theme) {
@@ -244,31 +256,39 @@ function current_tab() {
 // functions.
 var DEFAULT_ERROR_REPORTER = null;
 
+function auto_close_popup_window() {
+	return load_options('sync', ['autoclose_popup']).then(function(items) {
+		if (items['autoclose_popup']) {
+			window.close();
+		}
+	});
+}
+
 function open_url_in_this_tab(url) {
-	current_tab().then(function(tab) {
+	return current_tab().then(function(tab) {
 		chrome.tabs.update(tab.id, {'url': url});
-	}, DEFAULT_ERROR_REPORTER);
+	}, DEFAULT_ERROR_REPORTER).then(auto_close_popup_window);
 }
 function _open_url_in_new_tab(url, active) {
-	load_options('sync', ['new_tab_next_to_current']).then(function(items) {
+	return load_options('sync', ['new_tab_next_to_current']).then(function(items) {
 		if (items['new_tab_next_to_current']) {
-			current_tab().then(function(tab) {
+			return current_tab().then(function(tab) {
 				chrome.tabs.create({'url': url, 'index': tab.index + 1, 'active': active});
 			}, DEFAULT_ERROR_REPORTER);
 		} else {
-			chrome.tabs.create({'url': url, 'active': active});
+			return chrome.tabs.create({'url': url, 'active': active});
 		}
 	}, DEFAULT_ERROR_REPORTER);
 }
 function open_url_in_new_tab(url) {
-	_open_url_in_new_tab(url, true);
+	return _open_url_in_new_tab(url, true).then(auto_close_popup_window);
 }
 function open_url_in_new_background_tab(url) {
-	_open_url_in_new_tab(url, false);
+	return _open_url_in_new_tab(url, false).then(auto_close_popup_window);
 }
 function open_url_in_new_window(url) {
-	chrome.windows.create({'url': url});
+	return chrome.windows.create({'url': url}).then(auto_close_popup_window);
 }
 function open_url_in_new_incognito(url) {
-	chrome.windows.create({'url': url, 'incognito': true});
+	return chrome.windows.create({'url': url, 'incognito': true}).then(auto_close_popup_window);
 }

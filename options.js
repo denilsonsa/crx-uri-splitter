@@ -123,6 +123,8 @@ function other_option_save(ev) {
 }
 
 function init() {
+	detect_platform();
+
 	let options_form = document.getElementById('options_form');
 	load_options('sync', [].concat(g_datalist_names, g_other_options_names)).then(function(items) {
 		for (let name of g_datalist_names) {
@@ -165,18 +167,27 @@ function init() {
 		}
 	}, simple_error_reporter);
 
-	chrome.commands.getAll(function(cmds) {
-		var output = document.getElementById('shortcut_key');
-		if (!output) return;
-		for (let cmd of cmds) {
-			if (cmd.name = '_execute_browser_action') {
-				output.value = cmd.shortcut || '(none)';
-				return;
+	if (chrome.commands && chrome.commands.getAll) {
+		chrome.commands.getAll(function(cmds) {
+			var output = document.getElementById('shortcut_key');
+			if (!output) return;
+			for (let cmd of cmds) {
+				if (cmd.name = '_execute_browser_action') {
+					output.value = cmd.shortcut || '(none)';
+					return;
+				}
 			}
+			output.value = '(unknown)';
+			return;
+		});
+	} else {
+		// Not supported in Firefox Android.
+		// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/commands
+		var output = document.getElementById('shortcut_key');
+		if (output) {
+			output.value = '(unsupported on this platform)';
 		}
-		output.value = '(unknown)';
-		return;
-	});
+	}
 
 	// Links to chrome:// are blocked by the browser, so I need these event
 	// handler functions to make them work as the user would expect.

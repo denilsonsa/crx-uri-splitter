@@ -6,7 +6,7 @@ URI Splitter (Chrome extension)
 Browser extension to easily and quickly edit the URL/URI from the current page.
 
 * [Get it on Chrome Web Store!][cws]
-* [Get it on Mozilla Firefox Add-ons!][amo]
+* [Get it on Mozilla Firefox Add-ons!][amo] - both on desktop and on Android
 
 Features:
 
@@ -17,7 +17,7 @@ Features:
 * Customizable fonts.
 * [Internationalized domain name][idn] support (thanks to [punycode.js][punycode] library).
 * Light and dark color schemes.
-* Chrome sync (your options are synced across devices).
+* Browser sync (your options are synced across devices).
 
 [![Screenshot of an Amazon search page in the extension](images/Example-amazon.png)][cws]
 
@@ -49,6 +49,26 @@ If you forget the keyboard shortcuts, just press `Ctrl` or `Alt` or `⌘` and al
 It is possible to tweak the behavior of the multi-line fields by going into the *quick options* (`⚙` button, or `Ctrl+O` or `⌘O`). The default settings should work for most cases, but the options are there in case they don't work for you. You can even set multiple characters as separators (in that case, the first character will be used for joining the lines when building the full URL).
 
 ![Screenshot of quick options](images/Quick-options.png)
+
+Differences between each version
+--------------------------------
+
+Browser sync is achieved using the browser's own syncing feature. That means the options will be synced across multiple Chrome browsers signed in with the same Google account, and across multiple Firefox browsers signed in with the same Mozilla account. It is not possible to sync across different browser vendors.
+
+This extension is also available for [Firefox for Android](https://play.google.com/store/apps/details?id=org.mozilla.firefox). However, due to [technical reasons](https://discourse.mozilla.org/t/top-apis-mising-on-firefox-for-android/124506), some features are not available:
+
+| Feature                                                | Desktop | Mobile |
+|:-------------------------------------------------------|:-------:|:------:|
+| Keyboard shortcut to launch the extension              |   Yes   |   No   |
+| Keyboard shortcuts inside the extension                |   Yes   |   Yes  |
+| Native tooltips on mouse-over                          |   Yes   |   No   |
+| Opening the extension settings directly from the popup |   Yes   |   No   |
+| Opening in a new tab at the end of all tabs            |   Yes   |   Yes  |
+| Opening in a new tab next to the current one           |   Yes   |   No   |
+| Opening in a background tab                            |   Yes   |   No   |
+| Opening in a new window                                |   Yes   |   No   |
+| Opening in a new incognito/private window              |   Yes   |   No   |
+| Browser sync (for syncing the options across devices)  |   Yes   |   No   |
 
 History
 -------

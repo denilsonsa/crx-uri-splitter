@@ -19,6 +19,13 @@ form {
 	padding: 0;
 }
 
+.mobile .desktop-only {
+	display: none;
+}
+.desktop .mobile-only {
+	display: none;
+}
+
 :any-link {
 	color: var(--link-color);
 }

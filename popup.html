@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <script src="common.js" defer></script>
 <script src="punycode-v1.4.1.js" defer></script>
 <script src="popup.js" defer></script>
@@ -14,10 +15,13 @@ html, body, form, p, div {
 	padding: 0;
 }
 body {
-	min-width: 300px;
-	max-width: 800px;
 	box-sizing: border-box;
 	padding: 4px;
+}
+html.desktop body {
+	min-width: 300px;
+	max-width: 800px;
+	width: var(--desired-width);
 }
 
 textarea {
@@ -196,7 +200,8 @@ input#hash_sep {
 	border-bottom-left-radius: 4px;
 }
 .row.buttons > input#options,
-.row.buttons > input#incognito {
+.mobile .row.buttons > input#tab,
+.desktop .row.buttons > input#incognito {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 }
@@ -244,9 +249,9 @@ input#hash_sep {
 		<input type="button" id="options"    value="⚙"          title="Options"                        data-keyboard="O">
 		<input type="submit" id="open"       value="Go!"        title="Open in the current tab"        data-keyboard="G" data-entermodifier="⌥⏎">
 		<input type="button" id="tab"        value="new tab"    title="Open in a new tab"              data-keyboard="T" data-entermodifier="⇧⌃⏎">
-		<input type="button" id="background" value="background" title="Open in a background tab"       data-keyboard="B" data-entermodifier="⌃⏎">
-		<input type="button" id="window"     value="window"     title="Open in a new window"           data-keyboard="W" data-entermodifier="⇧⏎">
-		<input type="button" id="incognito"  value="incognito"  title="Open in a new incognito window" data-keyboard="I">
+		<input type="button" id="background" value="background" title="Open in a background tab"       data-keyboard="B" data-entermodifier="⌃⏎" class="desktop-only">
+		<input type="button" id="window"     value="window"     title="Open in a new window"           data-keyboard="W" data-entermodifier="⇧⏎" class="desktop-only">
+		<input type="button" id="incognito"  value="incognito"  title="Open in a new incognito window" data-keyboard="I" class="desktop-only">
 	</div>
 </div>
 
@@ -263,12 +268,6 @@ input#hash_sep {
 					<th></th>
 				</tr>
 			</thead>
-			<tfoot>
-				<tr>
-					<!-- An empty href="" would be considered "visited", rendering this link purple instead of blue. -->
-					<td colspan="3"><a href="#" id="other_options">Other options…</a></td>
-				</tr>
-			</tfoot>
 			<tbody>
 				<tr>
 					<td class="kind"><label><input type="checkbox" id="search_sort"></label></td>
@@ -297,6 +296,9 @@ input#hash_sep {
 				</tr>
 			</tbody>
 		</table>
+		<!-- An empty href="" would be considered "visited", rendering this link purple instead of blue. -->
+		<div class="desktop-only"><a href="#" id="other_options">Other options…</a></div>
+		<div class="mobile-only"><hr>More options can be found at:<br>⋮ → Extensions → Extensions Manager → URI Splitter → Settings</div>
 	</fieldset>
 </div>
 

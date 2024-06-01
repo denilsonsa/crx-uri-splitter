@@ -2,13 +2,14 @@
 <html>
 <head>
 <meta charset="utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <script src="common.js" defer></script>
 <script src="options.js" defer></script>
 <link rel="stylesheet" href="common.css">
 <title>URI Splitter</title>
 <style>
-html {
-	width: 40em;
+html.desktop {
+	width: 44em;
 }
 
 textarea {
@@ -25,11 +26,11 @@ fieldset > p > input,
 fieldset > p > textarea,
 fieldset > p > span {
 	flex: 1 1 auto;
-	width: 66%;
+	width: 70%;
 }
 fieldset > p > label {
 	flex: 1 1 auto;
-	width: 33%;
+	width: 30%;
 	text-align: right;
 	margin-right: 4px;
 }
@@ -105,15 +106,16 @@ https://stackoverflow.com/q/952861
 
 <fieldset>
 	<legend>Behavior, look and feel</legend>
-	<p><label></label><span><label title="When disabled, the new tab is appended to end of the tab bar. When enabled, the extension tries to mimic Chrome's default behavior, but ends up behaving slightly different."><input type="checkbox" id="new_tab_next_to_current"> Open new tab next to the current one</label></span></p>
-	<p><label></label><span><label title="Hide tooltips (like this one) and the keyboard shortcut overlay that shows up when you hold a modifier key."><input type="checkbox" id="hide_tooltips"> Hide tooltips and keyboard shortcut reminders</label></span></p>
+	<p><label></label><span><label title="Automatically closes the extension popup window after opening the URI."><input type="checkbox" id="autoclose_popup"> Auto-close the extension window after opening a URI</label></span></p>
+	<p class="desktop-only"><label></label><span><label title="When disabled, the new tab is appended to end of the tab bar. When enabled, the extension tries to mimic Chrome's default behavior, but ends up behaving slightly different."><input type="checkbox" id="new_tab_next_to_current"> Open new tab next to the current one</label></span></p>
+	<p><label></label><span><label title="Hide tooltips (like this one) and the keyboard shortcut overlay that shows up when you hold a modifier key."><input type="checkbox" id="hide_tooltips"> Hide <span class="desktop-only">tooltips and</span> keyboard shortcut reminders</label></span></p>
 	<p><label></label><span><label title="This instructs the browser not to save or suggest input values based on previous usage. For some people, autofill is useful, for others it is annoying and raises privacy concerns. This option has no effect if autofill is already disabled in your browser."><input type="checkbox" id="disable_autocomplete"> Disable browser's built-in autocomplete (autofill)</label></span></p>
 	<p><label>Color theme</label><span class="horizontal_radioboxes"><label><input type="radio" name="ui_theme" value="light"> Light</label><label><input type="radio" name="ui_theme" value="dark"> Dark</label><label><input type="radio" name="ui_theme" value="auto"> Auto</label></span></p>
 	<p><label>Icon theme</label><span class="horizontal_radioboxes"><label><input type="radio" name="icon_theme" value="light"> <img src="icon-light-32.png" width="16" height="16" alt="Icon for light theme"></label><label><input type="radio" name="icon_theme" value="dark"> <img src="icon-dark-32.png" width="16" height="16" alt="Icon for dark theme"></label></span></p>
-	<p><label for="window_width" >Window width:</label>     <input type="number" id="window_width" min="300" max="800" step="1" required></p>
+	<p class="desktop-only"><label for="window_width" >Window width:</label>     <input type="number" id="window_width" min="300" max="800" step="1" required></p>
 	<p title="CSS font declaration for text input fields"><label for="input_font"   >Single-line font:</label> <input type="text" id="input_font" placeholder="CSS &quot;font&quot; property" required pattern="[^;]+"></p>
 	<p title="CSS font declaration for textarea"><label for="textarea_font">Multi-line font:</label>  <input type="text" id="textarea_font" placeholder="CSS &quot;font&quot; property" required pattern="[^;]+"></p>
-	<p title="The default shortcut is Ctrl+Shift+L (or Control+L on Mac)"><label for="link_to_configurecommands">Launch key:</label> <span><output id="shortcut_key"></output><br><a id="link_to_configurecommands" href="chrome://extensions/configureCommands">Configure Keyboard Shortcuts</a></span></p>
+	<p class="desktop-only" title="The default shortcut is Ctrl+Shift+L (or Control+L on Mac)"><label for="link_to_configurecommands">Launch key:</label> <span><output id="shortcut_key"></output><br><a id="link_to_configurecommands" href="chrome://extensions/configureCommands">Configure Keyboard Shortcuts</a></span></p>
 </fieldset>
 
 <fieldset>

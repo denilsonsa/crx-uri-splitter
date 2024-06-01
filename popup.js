@@ -489,6 +489,8 @@ function keydown_handler(ev) {
 // Initialization.
 
 function init() {
+	detect_platform();
+
 	// Quick options: listing them and adding event listeners.
 	let quick_option_names = [];
 	for (let input of document.querySelectorAll('#options_panel input')) {
@@ -531,7 +533,7 @@ function init() {
 			// Warning: This style is copy-pasted also in options.js.
 			style.textContent = `
 				body {
-					width: ${items.window_width}px;
+					--desired-width: ${items.window_width}px;
 				}
 				input[type="email"],
 				input[type="number"],
@@ -573,7 +575,12 @@ function init() {
 	document.getElementById('incognito').addEventListener('click', open_in_new_incognito);
 	document.getElementById('other_options').addEventListener('click', function(ev) {
 		ev.preventDefault();
-		chrome.runtime.openOptionsPage();
+		chrome.runtime.openOptionsPage().then(function() {
+			// On Firefox Android, the options page opens in the background.
+			// But it's good UX to close the popup in all platforms.
+			// After all, the user wants to go the options page.
+			window.close();
+		});
 	});
 	document.getElementById('form').addEventListener('submit', function(ev) {
 		ev.preventDefault();
