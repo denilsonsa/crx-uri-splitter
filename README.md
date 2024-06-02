@@ -157,7 +157,6 @@ TODO
     * [ ] Publish to Edge
     * [ ] Publish to Opera
     * [ ] Test/publish somewhere else? Maybe Safari?
-* [ ] Make sure it works on Firefox Android, and enable it for Android on the Add-on store page
-* [ ] Create new screenshots, both Firefox and Chrome, light and dark
+* [ ] Create new screenshots, both Firefox and Chrome, light and dark, desktop and mobile
 * [ ] Add a context menu item to open link in the extension pop-up
 * [ ] Redesign the icon to be more readable

@@ -382,7 +382,6 @@ function hide_shortcuts() {
 
 // Initialization.
 function prepare_keyboard_shortcuts(hide_tooltips) {
-	var is_mac = /\bMac OS X\b/.test(window.navigator.appVersion);
 	var shortcuts_overlay = document.getElementById('shortcuts_overlay');
 	for (let elem of document.querySelectorAll('[data-keyboard]')) {
 		let keys = elem.dataset.keyboard.trim().split(/\s+/);
@@ -394,7 +393,7 @@ function prepare_keyboard_shortcuts(hide_tooltips) {
 		}
 		let entermodifier = elem.dataset.entermodifier;
 		if (entermodifier) {
-			if (is_mac) {
+			if (IS_MAC) {
 				// Note: that character is ⌃ 8963, U+2303 UP ARROWHEAD
 				// It looks similar, but it is NOT ^ 94, U+005E CIRCUMFLEX ACCENT
 				entermodifier = entermodifier.replace(/⌃/g, '⌘');
@@ -413,7 +412,7 @@ function prepare_keyboard_shortcuts(hide_tooltips) {
 			shortcuts_overlay.appendChild(shadow);
 			for (let key of keys) {
 				let elem = document.createElement('kbd');
-				elem.textContent = (key.length == 1) ? (is_mac ? '⌘' : '⌃') + key : key;
+				elem.textContent = (key.length == 1) ? (IS_MAC ? '⌘' : '⌃') + key : key;
 				shadow.appendChild(elem);
 			}
 		}
@@ -436,8 +435,7 @@ function keydown_handler(ev) {
 		(ev.metaKey  ? only_meta  : 0)
 	);
 	let modifiers_ignoring_shift = modifiers & (0xFF ^ only_shift);
-	let is_mac = /\bMac OS X\b/.test(window.navigator.appVersion);
-	let platform_control = is_mac ? only_meta : only_ctrl;
+	let platform_control = IS_MAC ? only_meta : only_ctrl;
 
 	if (ev.key == 'Enter') {
 		if (modifiers === only_alt) {
@@ -490,6 +488,14 @@ function keydown_handler(ev) {
 
 function init() {
 	detect_platform();
+
+	if (IS_GECKO) {
+		// Renaming "incognito" to "private", to match the term used by Firefox.
+		let btn = document.getElementById('incognito');
+		btn.value = btn.value.replace('incognito', 'private');
+		btn.title = btn.title.replace('incognito', 'private');
+		// Note that the shortcut is still Ctrl+I.
+	}
 
 	// Quick options: listing them and adding event listeners.
 	let quick_option_names = [];
@@ -607,4 +613,6 @@ function init() {
 // This script is being included with the "defer" attribute, which means it
 // will only be executed after the document has been parsed.
 DEFAULT_ERROR_REPORTER = alert_error_reporter;
+var IS_MAC = /\bMac OS X\b/.test(window.navigator.appVersion);
+var IS_GECKO = /\bGecko\/[0-9]/.test(window.navigator.userAgent);
 init();
