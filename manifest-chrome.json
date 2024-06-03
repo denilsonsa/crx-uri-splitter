@@ -24,9 +24,7 @@
     "default_title": "URI Splitter"
   },
   "background": {
-    "service_worker": "serviceworker.js",
-    "scripts": ["common.js", "serviceworker.js"],
-    "persistent": false
+    "service_worker": "serviceworker.js"
   },
   "commands": {
     "_execute_action": {
@@ -45,10 +43,5 @@
     "activeTab",
     "storage"
   ],
-  "content_security_policy": {},
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "uri-splitter@denilson.sa.nom.br"
-    }
-  }
+  "content_security_policy": {}
 }
