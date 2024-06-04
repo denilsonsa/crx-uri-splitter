@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rm -f crx-uri-splitter{,-chrome,-firefox}.zip
+rm -f crx-uri-splitter{,-chrome,-firefox}.zip manifest.json
 
 for browser in chrome firefox ; do
 	cp -a "manifest-${browser}.json" "manifest.json"
