@@ -1,4 +1,4 @@
-URI Splitter (Chrome extension)
+![logo](./icons/icon-logo-32.png) URI Splitter (browser extension)
 ===============================
 
 [Donation - buy me a coffee](https://denilson.sa.nom.br/donate.html)
