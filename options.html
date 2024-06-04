@@ -40,7 +40,7 @@ fieldset > p > span.horizontal_radioboxes {
 	justify-content: flex-start;
 }
 fieldset > p > span.horizontal_radioboxes > label {
-	flex: 0 1 20%;
+	flex: 0 1 16.66%;
 }
 fieldset > div > p {
 	margin: 1ex 0;
@@ -110,8 +110,19 @@ https://stackoverflow.com/q/952861
 	<p class="desktop-only"><label></label><span><label title="When disabled, the new tab is appended to end of the tab bar. When enabled, the extension tries to mimic Chrome's default behavior, but ends up behaving slightly different."><input type="checkbox" id="new_tab_next_to_current"> Open new tab next to the current one</label></span></p>
 	<p><label></label><span><label title="Hide tooltips (like this one) and the keyboard shortcut overlay that shows up when you hold a modifier key."><input type="checkbox" id="hide_tooltips"> Hide <span class="desktop-only">tooltips and</span> keyboard shortcut reminders</label></span></p>
 	<p><label></label><span><label title="This instructs the browser not to save or suggest input values based on previous usage. For some people, autofill is useful, for others it is annoying and raises privacy concerns. This option has no effect if autofill is already disabled in your browser."><input type="checkbox" id="disable_autocomplete"> Disable browser's built-in autocomplete (autofill)</label></span></p>
-	<p><label>Color theme</label><span class="horizontal_radioboxes"><label><input type="radio" name="ui_theme" value="light"> Light</label><label><input type="radio" name="ui_theme" value="dark"> Dark</label><label><input type="radio" name="ui_theme" value="auto"> Auto</label></span></p>
-	<p><label>Icon theme</label><span class="horizontal_radioboxes"><label><input type="radio" name="icon_theme" value="light"> <img src="icon-light-32.png" width="16" height="16" alt="Icon for light theme"></label><label><input type="radio" name="icon_theme" value="dark"> <img src="icon-dark-32.png" width="16" height="16" alt="Icon for dark theme"></label></span></p>
+	<p><label>Color theme</label><span class="horizontal_radioboxes">
+		<label><input type="radio" name="ui_theme" value="light"> Light</label>
+		<label><input type="radio" name="ui_theme" value="dark" > Dark</label>
+		<label><input type="radio" name="ui_theme" value="auto" > Auto</label>
+	</span></p>
+	<p><label>Icon theme</label><span class="horizontal_radioboxes">
+		<label><input type="radio" name="icon_theme" value="logo"> <img src="icons/icon-logo-32.png" width="16" height="16" alt="Icon of black color with thin white border"></label>
+		<label><input type="radio" name="icon_theme" value="black"> <img src="icons/icon-black-32.png" width="16" height="16" alt="Icon of black color"></label>
+		<label><input type="radio" name="icon_theme" value="dimgray"> <img src="icons/icon-dimgray-32.png" width="16" height="16" alt="Icon of dimgray color"></label>
+		<label><input type="radio" name="icon_theme" value="gray" > <img src="icons/icon-gray-32.png" width="16" height="16" alt="Icon of gray color"></label>
+		<label><input type="radio" name="icon_theme" value="silver"> <img src="icons/icon-silver-32.png" width="16" height="16" alt="Icon of silver color"></label>
+		<label><input type="radio" name="icon_theme" value="white" > <img src="icons/icon-white-32.png" width="16" height="16" alt="Icon of white color"></label>
+	</span></p>
 	<p class="desktop-only"><label for="window_width" >Window width:</label>     <input type="number" id="window_width" min="300" max="800" step="1" required></p>
 	<p title="CSS font declaration for text input fields"><label for="input_font"   >Single-line font:</label> <input type="text" id="input_font" placeholder="CSS &quot;font&quot; property" required pattern="[^;]+"></p>
 	<p title="CSS font declaration for textarea"><label for="textarea_font">Multi-line font:</label>  <input type="text" id="textarea_font" placeholder="CSS &quot;font&quot; property" required pattern="[^;]+"></p>

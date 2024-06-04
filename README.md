@@ -32,7 +32,7 @@ Features:
 How to use
 ----------
 
-To activate the extension, just click on ![its icon](./icon-light-16.png) or press `Ctrl+Shift+L` (or `Control+L` on Mac). This shortcut has been chosen because it is similar to [the browser's shortcut to focus the location bar][chrome-shortcuts] (`Ctrl+L` or `⌘L`).
+To activate the extension, just click on ![its icon](./icons/icon-logo-16.png) or press `Ctrl+Shift+L` (or `Control+L` on Mac). This shortcut has been chosen because it is similar to [the browser's shortcut to focus the location bar][chrome-shortcuts] (`Ctrl+L` or `⌘L`).
 
 ![Screenshot of example.com in the extension](images/Example-example.png)
 

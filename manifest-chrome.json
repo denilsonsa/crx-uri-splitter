@@ -7,18 +7,23 @@
   "version": "1.1",
   "homepage_url": "https://github.com/denilsonsa/crx-uri-splitter/",
   "icons": {
-    "16": "icon-light-16.png",
-    "24": "icon-light-24.png",
-    "32": "icon-light-32.png",
-    "48": "icon-light-48.png",
-    "128": "icon-light-128.png"
+    "16" : "icons/icon-logo-16.png",
+    "24" : "icons/icon-logo-24.png",
+    "32" : "icons/icon-logo-32.png",
+    "48" : "icons/icon-logo-48.png",
+    "64" : "icons/icon-logo-64.png",
+    "128": "icons/icon-logo-128.png",
+    "256": "icons/icon-logo-256.png"
   },
   "action": {
     "default_icon": {
-      "16": "icon-light-16.png",
-      "24": "icon-light-24.png",
-      "32": "icon-light-32.png",
-      "48": "icon-light-48.png"
+      "16" : "icons/icon-logo-16.png",
+      "24" : "icons/icon-logo-24.png",
+      "32" : "icons/icon-logo-32.png",
+      "48" : "icons/icon-logo-48.png",
+      "64" : "icons/icon-logo-64.png",
+      "128": "icons/icon-logo-128.png",
+      "256": "icons/icon-logo-256.png"
     },
     "default_popup": "popup.html",
     "default_title": "URI Splitter"
