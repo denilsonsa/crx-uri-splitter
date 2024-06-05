@@ -87,6 +87,12 @@ function load_options(which_storage, keys) {
 					if (!(name in items)) {
 						items[name] = g_default_options[name];
 					}
+					if (name === 'icon_theme') {
+						// Fallback for removed themes.
+						if (/^(light|dark)$/.test(items[name])) {
+							items[name] = g_default_options[name];
+						}
+					}
 				}
 				resolve(items);
 			}
