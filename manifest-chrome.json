@@ -4,7 +4,7 @@
   "short_name": "URI Splitter",
   "description": "Easily and quickly edit the URL/URI from the current page",
   "author": "Denilson S\u00e1 Maia",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "homepage_url": "https://github.com/denilsonsa/crx-uri-splitter/",
   "icons": {
     "16" : "icons/icon-logo-16.png",
