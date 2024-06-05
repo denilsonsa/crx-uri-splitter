@@ -93,6 +93,7 @@ function load_options(which_storage, keys) {
 							items[name] = 'logo';
 						} else if (items[name] === 'dark') {
 							items[name] = 'white';
+						}
 					}
 				}
 				resolve(items);
