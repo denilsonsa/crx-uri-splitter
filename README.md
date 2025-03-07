@@ -153,6 +153,16 @@ My wife for re-creating the logo of this extension. And for all support she give
 TODO
 ----
 
+* [ ] Better handling when the extension lacks Incognito access
+    * When the user hasn't yet given incognito permission to the extension, clicking on the "Incognito" button throws an error:
+        * Error: Cannot open URL "…" in an incognito window.
+        * Error: Extension does not have permission for incognito mode
+    * <https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions#allow_access>
+    * <https://support.google.com/chrome_webstore/answer/2664769#:%7E:text=Manage%20your%20extensions>
+    * <https://developer.chrome.com/docs/extensions/reference/api/extension#method-isAllowedIncognitoAccess>
+    * Likewise, a similar error happens on Chrome when trying local `file:` URIs:
+        * Error: Cannot navigate to a file URL without local file access.
+    * I should find a way to communicate this to the user. Possibly using a help page, possibly being displayed in the popup window.
 * Publication-related
     * [ ] Publish to Edge
     * [ ] Publish to Opera
