@@ -20,6 +20,28 @@ if (typeof apply_icon_theme === 'undefined') {
 	importScripts('common.js');
 }
 
-load_options('sync', ['icon_theme']).then(function(items) {
-	apply_icon_theme(items.icon_theme);
-});
+function init() {
+	load_options('sync', ['icon_theme']).then(function(items) {
+		apply_icon_theme(items.icon_theme);
+	});
+}
+
+// Initialization when the extension is first installed.
+// But it does not fire if the extension is turned off and then on.
+// But it does not fire when the browser starts.
+//chrome.runtime.onInstalled.addListener(init);
+
+// Initialization when the extension is first installed.
+// Also when the extension is turned off and on.
+// But it does not fire when the browser starts.
+// Also does not work on Firefox around version 136.
+self.addEventListener("activate", init);
+
+// Initialization when the browser is restarted.
+// But it does not fire during the installation.
+// But it does not fire if the extension is turned off and then on.
+chrome.runtime.onStartup.addListener(init);
+
+// Sometimes neither of those events triggers. (Usually on Firefox.)
+// So, let's just call init() directly here.
+init();
