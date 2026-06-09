@@ -113,8 +113,11 @@ function multiline_join(kind, value) {
 			var pieces = partition('=', line);
 			pieces[0] = encodeURIComponent(pieces[0]);
 			pieces[2] = encodeURIComponent(pieces[2]);
+			if (input_value(kind + '_paren')) {
+				pieces[0] = pieces[0].replace(/[()]/g, percent_encode);
+				pieces[2] = pieces[2].replace(/[()]/g, percent_encode);
+			}
 			return pieces.join('');
-
 		});
 	}
 
@@ -157,7 +160,7 @@ function full_uri_to_fields() {
 	document.getElementById('port').value = url.port;
 	document.getElementById('username').value = decodeURIComponent(url.username);
 	document.getElementById('password').value = decodeURIComponent(url.password);
-	document.getElementById('pathname').value = decodeURIComponent(url.pathname);
+	document.getElementById('pathname').value = input_value('path_encode') ? decodeURIComponent(url.pathname) : url.pathname;
 	document.getElementById('search').value = multiline_split(url.search);
 	document.getElementById('hash').value = multiline_split(url.hash);
 
@@ -250,10 +253,11 @@ function fields_to_full_uri() {
 				s.pathname = s.pathname.trim();
 			}
 		}
-		concatenation += (
-			(protocol_is_special ? '/' : '') +
-			s.pathname.replace(/[%#\\? ]/g, percent_encode)
-		);
+		s.pathname = s.pathname.replace(/[%#\\? ]/g, percent_encode)
+		if (input_value('path_paren')) {
+			s.pathname = s.pathname.replace(/[()]/g, percent_encode)
+		}
+		concatenation += (protocol_is_special ? '/' : '') + s.pathname;
 	}
 	if (s.search) {
 		concatenation += '?' + s.search;

@@ -271,22 +271,28 @@ input#hash_sep {
 			</thead>
 			<tbody>
 				<tr>
-					<td class="kind"><label><input type="checkbox" id="path_trim"></label></td>
-					<td class="kind"><label><input type="checkbox" id="search_trim"></label></td>
-					<td class="kind"><label><input type="checkbox" id="hash_trim"></label></td>
-					<td class="label">Trim whitespace</td>
-				</tr>
-				<tr>
 					<td class="kind"></td>
 					<td class="kind"><label><input type="checkbox" id="search_sort"></label></td>
 					<td class="kind"><label><input type="checkbox" id="hash_sort"></label></td>
 					<td class="label">Sort parameters</td>
 				</tr>
 				<tr>
-					<td class="kind"></td>
+					<td class="kind"><label><input type="checkbox" id="path_trim"></label></td>
+					<td class="kind"><label><input type="checkbox" id="search_trim"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_trim"></label></td>
+					<td class="label">Trim whitespace</td>
+				</tr>
+				<tr>
+					<td class="kind"><label><input type="checkbox" id="path_encode"></label></td>
 					<td class="kind"><label><input type="checkbox" id="search_encode"></label></td>
 					<td class="kind"><label><input type="checkbox" id="hash_encode"></label></td>
 					<td class="label">Decode/encode parameters</td>
+				</tr>
+				<tr>
+					<td class="kind"><label><input type="checkbox" id="path_paren"></label></td>
+					<td class="kind"><label><input type="checkbox" id="search_paren"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_paren"></label></td>
+					<td class="label" title="Not strictly required, but useful when using URLs inside Markdown.">Encode "(" and ")"</td>
 				</tr>
 				<tr>
 					<td class="kind"></td>
