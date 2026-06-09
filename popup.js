@@ -113,9 +113,9 @@ function multiline_join(kind, value) {
 			var pieces = partition('=', line);
 			pieces[0] = encodeURIComponent(pieces[0]);
 			pieces[2] = encodeURIComponent(pieces[2]);
-			if (input_value(kind + '_paren')) {
-				pieces[0] = pieces[0].replace(/[()]/g, percent_encode);
-				pieces[2] = pieces[2].replace(/[()]/g, percent_encode);
+			if (input_value(kind + '_encodemore')) {
+				pieces[0] = pieces[0].replace(/[('*!)]/g, percent_encode);
+				pieces[2] = pieces[2].replace(/[('*!)]/g, percent_encode);
 			}
 			return pieces.join('');
 		});
@@ -254,8 +254,8 @@ function fields_to_full_uri() {
 			}
 		}
 		s.pathname = s.pathname.replace(/[%#\\? ]/g, percent_encode)
-		if (input_value('path_paren')) {
-			s.pathname = s.pathname.replace(/[()]/g, percent_encode)
+		if (input_value('path_encodemore')) {
+			s.pathname = s.pathname.replace(/[('*!)]/g, percent_encode)
 		}
 		concatenation += (protocol_is_special ? '/' : '') + s.pathname;
 	}

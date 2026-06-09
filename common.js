@@ -54,18 +54,18 @@ const g_default_options = {
 	// Quick options:
 	'path_trim': true,
 	'path_encode': true,
-	'path_paren': true,
-	'search_trim': true,
+	'path_encodemore': true,
 	'search_sort': true,
+	'search_trim': true,
 	'search_encode': true,
+	'search_encodemore': true,
 	'search_plus': true,
-	'search_paren': true,
 	'search_sep': '&',
-	'hash_trim': true,
 	'hash_sort': true,
+	'hash_trim': true,
 	'hash_encode': true,
+	'hash_encodemore': true,
 	'hash_plus': true,
-	'hash_paren': true,
 	'hash_sep': '&',
 	// -- Local storage --
 	// (nothing)

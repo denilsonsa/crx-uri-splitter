@@ -165,11 +165,23 @@ input#hash_sep {
 	width: 100%;
 	height: 100%;
 }
+
 #options_panel table tbody tr:hover {
 	background: var(--hover-color);
 }
 #options_panel table tbody tr td label:hover {
 	background: var(--double-hover-color);
+}
+
+#options_panel table thead tr th:nth-child(1):hover,
+#options_panel table thead tr th:nth-child(2):hover,
+#options_panel table thead tr th:nth-child(3):hover {
+	background: var(--double-hover-color);
+}
+#options_panel table:has(thead tr th:nth-child(1):hover) tbody tr td:nth-child(1),
+#options_panel table:has(thead tr th:nth-child(2):hover) tbody tr td:nth-child(2),
+#options_panel table:has(thead tr th:nth-child(3):hover) tbody tr td:nth-child(3) {
+	background: var(--hover-color);
 }
 
 .row.buttons > input[type="submit"],
@@ -280,7 +292,7 @@ input#hash_sep {
 					<td class="kind"><label><input type="checkbox" id="path_trim"></label></td>
 					<td class="kind"><label><input type="checkbox" id="search_trim"></label></td>
 					<td class="kind"><label><input type="checkbox" id="hash_trim"></label></td>
-					<td class="label">Trim whitespace</td>
+					<td class="label">Trim whitespace around</td>
 				</tr>
 				<tr>
 					<td class="kind"><label><input type="checkbox" id="path_encode"></label></td>
@@ -289,16 +301,16 @@ input#hash_sep {
 					<td class="label">Decode/encode parameters</td>
 				</tr>
 				<tr>
-					<td class="kind"><label><input type="checkbox" id="path_paren"></label></td>
-					<td class="kind"><label><input type="checkbox" id="search_paren"></label></td>
-					<td class="kind"><label><input type="checkbox" id="hash_paren"></label></td>
-					<td class="label" title="Not strictly required, but useful when using URLs inside Markdown.">Encode "(" and ")"</td>
+					<td class="kind"><label><input type="checkbox" id="path_encodemore"></label></td>
+					<td class="kind"><label><input type="checkbox" id="search_encodemore"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_encodemore"></label></td>
+					<td class="label" title="Not strictly required, but useful when placing URLs inside quotes or inside Markdown.">Encode: <samp>( ) ' * !</samp></td>
 				</tr>
 				<tr>
 					<td class="kind"></td>
 					<td class="kind"><label><input type="checkbox" id="search_plus"></label></td>
 					<td class="kind"><label><input type="checkbox" id="hash_plus"></label></td>
-					<td class="label">Decode "+" as space</td>
+					<td class="label" title="The plus sign is often used as space in HTTP query parameters.">Decode <samp>+</samp> as space</td>
 				</tr>
 				<tr>
 					<td class="kind"></td>
