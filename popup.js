@@ -190,6 +190,8 @@ function fields_to_full_uri() {
 			s[name] = multiline_join(name, elem.value);
 		} else if (elem.type == 'number') {
 			s[name] = elem.valueAsNumber;
+		} else if (elem.id == 'pathname') {
+			s[name] = elem.value;
 		} else {
 			s[name] = elem.value.trim();
 		}
@@ -239,11 +241,17 @@ function fields_to_full_uri() {
 		)
 	);
 	if (s.pathname) {
+		if (input_value('path_trim')) {
+			s.pathname = s.pathname.trim();
+		}
+		if (protocol_is_special && s.pathname[0] == '/') {
+			s.pathname = s.pathname.substring(1);
+			if (input_value('path_trim')) {
+				s.pathname = s.pathname.trim();
+			}
+		}
 		concatenation += (
-			(protocol_is_special && s.pathname[0] != '/'
-				? '/'
-				: ''
-			) +
+			(protocol_is_special ? '/' : '') +
 			s.pathname.replace(/[%#\\? ]/g, percent_encode)
 		);
 	}

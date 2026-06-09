@@ -150,6 +150,7 @@ input#hash_sep {
 #options_panel table th {
 	border: 0;
 	padding: 0 2px;
+	min-width: 7ch;
 	text-align: left;
 	vertical-align: middle;
 	font: inherit;
@@ -168,7 +169,7 @@ input#hash_sep {
 	background: var(--hover-color);
 }
 #options_panel table tbody tr td label:hover {
-	/* background: #DDD; */
+	background: var(--double-hover-color);
 }
 
 .row.buttons > input[type="submit"],
@@ -262,6 +263,7 @@ input#hash_sep {
 		<table>
 			<thead>
 				<tr>
+					<th class="kind">/path</th>
 					<th class="kind">?search</th>
 					<th class="kind">#hash</th>
 					<th></th>
@@ -269,26 +271,31 @@ input#hash_sep {
 			</thead>
 			<tbody>
 				<tr>
-					<td class="kind"><label><input type="checkbox" id="search_sort"></label></td>
-					<td class="kind"><label><input type="checkbox" id="hash_sort"></label></td>
-					<td class="label">Sort parameters</td>
-				</tr>
-				<tr>
-					<td class="kind"><label><input type="checkbox" id="search_encode"></label></td>
-					<td class="kind"><label><input type="checkbox" id="hash_encode"></label></td>
-					<td class="label">Decode/encode parameters</td>
-				</tr>
-				<tr>
-					<td class="kind"><label><input type="checkbox" id="search_plus"></label></td>
-					<td class="kind"><label><input type="checkbox" id="hash_plus"></label></td>
-					<td class="label">Decode "+" as space</td>
-				</tr>
-				<tr>
+					<td class="kind"><label><input type="checkbox" id="path_trim"></label></td>
 					<td class="kind"><label><input type="checkbox" id="search_trim"></label></td>
 					<td class="kind"><label><input type="checkbox" id="hash_trim"></label></td>
 					<td class="label">Trim whitespace</td>
 				</tr>
 				<tr>
+					<td class="kind"></td>
+					<td class="kind"><label><input type="checkbox" id="search_sort"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_sort"></label></td>
+					<td class="label">Sort parameters</td>
+				</tr>
+				<tr>
+					<td class="kind"></td>
+					<td class="kind"><label><input type="checkbox" id="search_encode"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_encode"></label></td>
+					<td class="label">Decode/encode parameters</td>
+				</tr>
+				<tr>
+					<td class="kind"></td>
+					<td class="kind"><label><input type="checkbox" id="search_plus"></label></td>
+					<td class="kind"><label><input type="checkbox" id="hash_plus"></label></td>
+					<td class="label">Decode "+" as space</td>
+				</tr>
+				<tr>
+					<td class="kind"></td>
 					<td class="kind"><input type="text" id="search_sep" title="Confused? Just use &amp;"></td>
 					<td class="kind"><input type="text" id="hash_sep" title="Confused? Just use &amp;"></td>
 					<td class="label">Separator chars</td>

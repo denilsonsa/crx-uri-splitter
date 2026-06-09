@@ -52,15 +52,16 @@ const g_default_options = {
 	'input_font': '1em/1.66 sans-serif',
 	'textarea_font': '1em/1.66 monospace',
 	// Quick options:
+	'path_trim': true,
+	'search_trim': true,
 	'search_sort': true,
 	'search_encode': true,
 	'search_plus': true,
-	'search_trim': true,
 	'search_sep': '&',
+	'hash_trim': true,
 	'hash_sort': true,
 	'hash_encode': true,
 	'hash_plus': true,
-	'hash_trim': true,
 	'hash_sep': '&',
 	// -- Local storage --
 	// (nothing)

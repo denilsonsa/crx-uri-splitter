@@ -108,6 +108,7 @@ html.light {
 	--invalid-color: #FF9AA2;
 	--input-color: #FFFFFF;
 	--hover-color: #DEDEDF;
+	--double-hover-color: #EEEEEF;
 	--button-color: #E6E6E6;
 	--button-hover-color: #CECECF;
 	--button-active-color: #B6B6B6;
@@ -129,6 +130,7 @@ html.light {
 		--invalid-color: #C50042;
 		--input-color: #23222B;
 		--hover-color: #414149;
+		--double-hover-color: #515159;
 		--button-color: #484854;
 		--button-hover-color: #5C5C6A;
 		--button-active-color: #1C1C22;
@@ -146,7 +148,8 @@ html.dark {
 	--bg-color: #1C1B22;
 	--invalid-color: #C50042;
 	--input-color: #23222B;
-	--hover-color: #414149;
+	--hover-color: #515159;
+	--double-hover-color: #494951;
 	--button-color: #484854;
 	--button-hover-color: #5C5C6A;
 	--button-active-color: #1C1C22;
