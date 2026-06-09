@@ -253,9 +253,13 @@ function fields_to_full_uri() {
 				s.pathname = s.pathname.trim();
 			}
 		}
-		s.pathname = s.pathname.replace(/[%#\\? ]/g, percent_encode)
-		if (input_value('path_encodemore')) {
-			s.pathname = s.pathname.replace(/[('*!)]/g, percent_encode)
+		if (input_value('path_encode')) {
+			s.pathname = encodeURIComponent(s.pathname).replace(/%2F/g, '/');
+			if (input_value('path_encodemore')) {
+				s.pathname = s.pathname.replace(/[('*!)]/g, percent_encode)
+			}
+		} else {
+			s.pathname = s.pathname.replace(/[%#\\? ]/g, percent_encode)
 		}
 		concatenation += (protocol_is_special ? '/' : '') + s.pathname;
 	}
